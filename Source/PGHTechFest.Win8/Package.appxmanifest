@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="0833d9a1-610d-4bdf-afa1-798790f3bc89" Publisher="CN=Evan" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>PGHTechFest.Win8</DisplayName>
+    <PublisherDisplayName>Evan</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PGHTechFest.Win8.App">
+      <VisualElements DisplayName="PGHTechFest.Win8" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="A .NET project to parse the Pittsburgh TechFest API data and display it for confernce attendees" ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="allLogos" ShortName="PGHTechFest" />
+        <SplashScreen Image="Assets\SplashScreen.png" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
+      </VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
