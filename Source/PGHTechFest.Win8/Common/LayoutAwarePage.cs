@@ -114,6 +114,12 @@ namespace PGHTechFest.Common
             Frame.Navigate(typeof(Sessions));
         }
 
+
+        protected void PresentessionsPage_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Presentessions));
+        }
+
         protected void SpeakersPage_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Speakers));

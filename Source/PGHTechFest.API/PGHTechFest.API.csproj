@@ -43,6 +43,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Models\PresentersFeed.cs" />
+    <Compile Include="Models\Presentession.cs" />
+    <Compile Include="Models\PresentessionFeed.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Presenter.cs" />
     <Compile Include="Models\SessionsFeed.cs" />

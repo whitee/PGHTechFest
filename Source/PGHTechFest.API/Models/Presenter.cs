@@ -10,7 +10,20 @@ namespace PGHTechFest.API.Models
         public string id { get; set; }
         public string name { get; set; }
         public string email { get; set; }
-        public string twitter { get; set; }
+        private string _twitter;
+        public string twitter
+        {
+            get { return DecorateTwitterHandle(_twitter); }
+            set { _twitter = value; }
+        }
+
+        private string DecorateTwitterHandle(string _twitter)
+        {
+            if(!string.IsNullOrWhiteSpace(_twitter) && _twitter[0] != '@')
+                return "@" + _twitter;
+            else
+                return _twitter;
+        }
         public string blog_url { get; set; }
         public string github_id { get; set; }
         public string bio { get; set; }

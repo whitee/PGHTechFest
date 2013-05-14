@@ -1,6 +1,6 @@
 ﻿<common:LayoutAwarePage
     x:Name="pageRoot"
-    x:Class="PGHTechFest.Pages.Sessions"
+    x:Class="PGHTechFest.Pages.Presentessions"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PGHTechFest.Pages"
@@ -15,11 +15,11 @@
 
     <Page.Resources>
         <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
-        <converter:SessionGrouptoSessionTopicsConverter x:Name="SessionGrouptoSessionTopicsConverter" />
-        
-        <CollectionViewSource x:Key="SessionGroups"
+        <converter:PresentessionGrouptoPresentessionTopicsConverter x:Name="PresentessionGrouptoPresentessionTopicsConverter" />
+
+        <CollectionViewSource x:Key="PresentessionGroups"
                           IsSourceGrouped="True"
-                          Source="{Binding SessionGroups}"
+                          Source="{Binding PresentessionGroups}"
                           />
     </Page.Resources>
 
@@ -50,7 +50,7 @@
 
         <Grid Grid.Row="1" x:Name="SessionPanel" >
             
-            <SemanticZoom Margin="120,0,0,0" Grid.Row="1"  x:Name="SessionZoom">
+            <SemanticZoom Grid.Row="1"  x:Name="SessionZoom">
                 <SemanticZoom.ZoomedOutView>
                     <GridView>
                         <GridView.ItemTemplate>
@@ -64,13 +64,13 @@
                                         <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" /> 
                                         <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                     </StackPanel>
-                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource SessionGrouptoSessionTopicsConverter}}" />
+                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentessionGrouptoPresentessionTopicsConverter}}" />
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Horizontal" VerticalChildrenAlignment="Center" Margin="120,0,0,0"/>
+                                <VariableSizedWrapGrid Orientation="Vertical" VerticalChildrenAlignment="Center" Margin="120,0,0,0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -88,13 +88,13 @@
                 </SemanticZoom.ZoomedOutView>
 
                 <SemanticZoom.ZoomedInView>
-                    <GridView ItemsSource="{Binding SessionGroups}"  SelectionMode="None" IsSwipeEnabled="True" >
+                    <GridView ItemsSource="{Binding PresentessionGroups}" SelectionMode="None" IsSwipeEnabled="True" >
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel MaxWidth="400">
-                                    <TextBlock Text="{Binding timeslot}"/>
+                                    <TextBlock Text="{Binding time}"/>
                                     <TextBlock Text="{Binding track}"/>
-                                    <TextBlock Text="{Binding presenter}"/>
+                                    <TextBlock Text="{Binding presenter_name}"/>
                                     <TextBlock Text="{Binding room}"/>
                                     <TextBlock Text="{Binding title}" TextWrapping="Wrap"/>
                                     <TextBlock Text="{Binding description}" TextWrapping="Wrap"/>
@@ -104,7 +104,7 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Vertical"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" Margin="120,0,0,0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -193,7 +193,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
-                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="SessionsPage_Click" />
+                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="PresentessionsPage_Click" />
                 
             </Grid>
         </AppBar>

@@ -8,8 +8,9 @@ namespace PGHTechFest.API.Services
 {
     public class APIQueryArgs : EventArgs
     {
-        public List<Presenter> Presenters{get;set;}
+        public List<Presenter> Presenters {get;set;}
         public List<Session> Sessions { get; set; }
+        public List<Presentession> Presentessions { get; set; }
 
         public APIQueryArgs(List<Presenter> presenters)
         {
@@ -19,6 +20,11 @@ namespace PGHTechFest.API.Services
         public APIQueryArgs(List<Session> sessions)
         {
             Sessions = sessions;
+        }
+
+        public APIQueryArgs(List<Presentession> presentession)
+        {
+            Presentessions = presentession;
         }
     }
 }

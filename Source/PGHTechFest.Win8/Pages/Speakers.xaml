@@ -14,7 +14,9 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-         <!-- <converter:UserToLinkConverter x:Name="UserToLinkConverter" />  //-->
+        <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
+        <converter:EmptyStringToVisibilityConverter x:Name="EmptyStringToVisibilityConverter" />
+        
     </Page.Resources>
 
     <!--
@@ -41,36 +43,65 @@
             </StackPanel>
         </Grid>
 
-        <ScrollViewer Grid.Row="1">
-            <GridView  Margin="120,0,0,0" ItemsSource="{Binding Presenters}">
+        <Grid Grid.Row="1">
+            <GridView  ItemsSource="{Binding Presenters}" SelectionMode="None">
                 <GridView.ItemTemplate>
                     <DataTemplate>
 						<Grid>
-							<StackPanel>
-								<!--<Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" />-->
-								<TextBlock Text="{Binding name}" Style="{StaticResource GroupHeaderTextStyle}"/>
-								<TextBlock Text="{Binding email}"/>
-								<TextBlock Text="{Binding bio}" TextWrapping="Wrap"/>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="@" VerticalAlignment="Center"/>
-									<HyperlinkButton Content="{Binding twitter}" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}" Margin="-16,0,0,-2"/>
-								</StackPanel>
-								<StackPanel Orientation="Horizontal">
-									<TextBlock Text="Blog: " VerticalAlignment="Center"/>
-									<HyperlinkButton x:Name="sdfdf" Content="{Binding blog_url}" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" Margin="-16,0,0,-2"/>
-								</StackPanel>
-								<HyperlinkButton Content="Github" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}"/>
-							</StackPanel>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{Binding name}" Style="{StaticResource PageSubheaderTextStyle}"/>
+                            
+                            <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"/>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,0,12,4"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <HyperlinkButton Content="{Binding twitter}" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}"  Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+
+                                    <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
+
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}">
+                                        <TextBlock Text="Blog: " VerticalAlignment="Center"/>
+                                        <HyperlinkButton Content="{Binding blog_url}" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" Margin="-16,0,0,-2"/>
+                                    </StackPanel>
+                                    <HyperlinkButton Grid.Row="3" Content="Github" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                </Grid>
+                            </Grid>
 						</Grid>
                     </DataTemplate>
                 </GridView.ItemTemplate>
 				<GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,0,0"/>
+                        <VariableSizedWrapGrid Margin="120,0,0,0" Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="Padding" Value="10" />
+                        <Setter Property="Background" Value="DarkGreen" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Width" Value="400" />
+                    </Style>
+                </GridView.ItemContainerStyle>
             </GridView>
-        </ScrollViewer>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
 
@@ -116,7 +147,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
-                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="SessionsPage_Click" />
+                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="PresentessionsPage_Click" />
 
             </Grid>
         </AppBar>

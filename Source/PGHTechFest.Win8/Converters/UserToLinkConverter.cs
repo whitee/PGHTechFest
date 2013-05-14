@@ -20,9 +20,9 @@ namespace PGHTechFest.Converters
                 case "blog": { return (!value.ToString().Contains("http://") ? "http://" : "") + value.ToString(); }
                 case "github": { return "http://github.com/" + value.ToString(); }
                 case "twitter": { return "http://twitter.com/" + value.ToString(); }
-                case "twitter_image": {  return (string.IsNullOrEmpty(value.ToString())) 
+                case "twitter_image": {  return (string.IsNullOrEmpty(value.ToString()))
                     ? "" 
-                    : "https://api.twitter.com/1/users/profile_image?screen_name=" + value.ToString() + "&size=bigger;"; 
+                    : "http://api.twitter.com/1/users/profile_image?screen_name=" + value.ToString() + "&size=bigger"; 
                 }
                     
             }

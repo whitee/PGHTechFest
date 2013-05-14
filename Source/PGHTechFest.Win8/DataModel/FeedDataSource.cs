@@ -18,6 +18,10 @@ namespace PGHTechFest.DataModel
 
         public EventHandler InitializationComplete;
 
+        private bool _isSessionReady;
+        private bool _isPresentessionReady;
+        private bool _isPresenterReady;
+
         #region Properties
         public bool IsInitialized { get; set; }
 
@@ -53,6 +57,30 @@ namespace PGHTechFest.DataModel
             get { return _SessionGroups; }
             set { _SessionGroups = value; OnPropertyChanged(); }
         }
+
+        ObservableCollection<Presentession> _Presentessions;
+        public ObservableCollection<Presentession> Presentessions
+        {
+            get { return _Presentessions; }
+            set { _Presentessions = value;
+                OnPropertyChanged();
+                CollectionViewSource sessionGroups = new CollectionViewSource();
+                sessionGroups.IsSourceGrouped = true;
+                var timeslotGroups = from s in _Presentessions
+                                     orderby s.time_sort ascending
+                                     group s by s.time into g
+                                     select new GroupInfoList<Presentession>(g.Key, g.ToList());
+                sessionGroups.Source = timeslotGroups;
+                PresentessionGroups = sessionGroups.View;
+            }
+        }
+
+        private ICollectionView _PresentessionGroups;
+        public ICollectionView PresentessionGroups
+        {
+            get { return _PresentessionGroups; }
+            set { _PresentessionGroups = value; OnPropertyChanged(); }
+        }
         #endregion
 
         public FeedDataSource()
@@ -60,14 +88,21 @@ namespace PGHTechFest.DataModel
             _feedService = new APIService(new WebAPIProvider());
             _feedService.PresenterQueryComplete += PresenterQueryComplete_Handler;
             _feedService.SessionQueryComplete += SessionsQueryComplete_Handler;
+            _feedService.PresentessionQueryComplete += PresentessionsQueryComplete_Handler;
+            _isPresentessionReady = _isSessionReady = _isPresenterReady = false;
         }
 
         public void PresenterQueryComplete_Handler(object sender, APIQueryArgs e)
         {
             if (e.Presenters != null)
+            {
                 Presenters = new ObservableCollection<Presenter>(e.Presenters);
+                _isPresenterReady = true;
+            }
             else
-                IsInitialized = false;
+                _isPresenterReady = false;
+
+            CheckInitializationComplete();
         }
 
         public void SessionsQueryComplete_Handler(object sender, APIQueryArgs e)
@@ -75,19 +110,48 @@ namespace PGHTechFest.DataModel
             if (e.Sessions != null)
             {
                 Sessions = new ObservableCollection<Session>(e.Sessions);
+                _isSessionReady = true;
 
+            }
+            else
+                _isSessionReady = false;
+
+            CheckInitializationComplete();
+        }
+
+        private void CheckInitializationComplete()
+        {
+            if (!IsInitialized && _isSessionReady && _isPresentessionReady && _isPresenterReady)
+            {
+                IsInitialized = true;
                 if (InitializationComplete != null)
                     InitializationComplete.Invoke(this, null);
             }
             else
+            {
                 IsInitialized = false;
+            }
+        }
+
+        public void PresentessionsQueryComplete_Handler(object sender, APIQueryArgs e)
+        {
+            if (e.Presentessions != null)
+            {
+                Presentessions = new ObservableCollection<Presentession>(e.Presentessions);
+                _isPresentessionReady = true;
+            }
+            else
+                _isPresentessionReady = false;
+
+            CheckInitializationComplete();
 
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             _feedService.QueryPresenters();
             _feedService.QuerySessions();
+            _feedService.QueryPresentessions();
         }
 
     }

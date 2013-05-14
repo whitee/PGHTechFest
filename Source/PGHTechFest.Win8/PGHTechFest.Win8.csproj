@@ -110,11 +110,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="Converters\PresentessionGrouptoPresentessionTopicsConverter.cs" />
     <Compile Include="Converters\SessionGrouptoSessionTopicsConverter.cs" />
     <Compile Include="Converters\UserToLinkConverter.cs" />
     <Compile Include="DataModel\DesignDataSource.cs" />
     <Compile Include="DataModel\FeedDataSource.cs" />
     <Compile Include="DataModel\GroupInfoList.cs" />
+    <Compile Include="Pages\Presentessions.xaml.cs">
+      <DependentUpon>Presentessions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sessions.xaml.cs">
       <DependentUpon>Sessions.xaml</DependentUpon>
     </Compile>
@@ -152,6 +157,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Presentessions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
