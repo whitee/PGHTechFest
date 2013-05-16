@@ -7,9 +7,9 @@
     xmlns:common="using:PGHTechFest.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:PGHTechFest.DataModel"
+    xmlns:vm="using:PGHTechFest.ViewModels"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    d:DataContext="{Binding Source={d:DesignInstance Type=data:DesignDataSource, IsDesignTimeCreatable=True}}"
+    d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
     xmlns:converter="using:PGHTechFest.Converters" 
     mc:Ignorable="d">
 

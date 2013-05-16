@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+#if NETFX_CORE
 using Windows.UI.Xaml.Data;
+#elif WINDOWS_PHONE
+#endif
 
 namespace PGHTechFest.Common
 {

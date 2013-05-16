@@ -1,4 +1,4 @@
-﻿using PGHTechFest.DataModel;
+﻿using PGHTechFest.ViewModels;
 using PGHTechFest.Pages;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace PGHTechFest.Common
         /// Identifies the <see cref="DefaultViewModel"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty DefaultViewModelProperty =
-            DependencyProperty.Register("DefaultViewModel", typeof(FeedDataSource),
+            DependencyProperty.Register("DefaultViewModel", typeof(MainViewModel),
             typeof(LayoutAwarePage), null);
 
         private List<Control> _layoutAwareControls;
@@ -55,7 +55,7 @@ namespace PGHTechFest.Common
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
 
             // Create an empty default view model
-            this.DefaultViewModel = Application.Current.Resources["DataSource"] as FeedDataSource;
+            this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
 
             if (!DefaultViewModel.IsInitialized)
                 DefaultViewModel.Initialize();
@@ -94,11 +94,11 @@ namespace PGHTechFest.Common
         /// An implementation of <see cref="IObservableMap&lt;String, Object&gt;"/> designed to be
         /// used as a trivial view model.
         /// </summary>
-        protected FeedDataSource DefaultViewModel
+        protected MainViewModel DefaultViewModel
         {
             get
             {
-                return this.GetValue(DefaultViewModelProperty) as FeedDataSource;
+                return this.GetValue(DefaultViewModelProperty) as MainViewModel;
             }
 
             set

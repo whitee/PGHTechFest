@@ -1,5 +1,5 @@
 ﻿using PGHTechFest.API.Models;
-using PGHTechFest.DataModel;
+using PGHTechFest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

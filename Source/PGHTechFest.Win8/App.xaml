@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PGHTechFest"
-    xmlns:localData="using:PGHTechFest.DataModel">
+    xmlns:vm="using:PGHTechFest.ViewModels">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
             <!-- Application-specific resources -->
 
             <x:String x:Key="AppName">Pittsburgh TechFest</x:String>
-            <localData:FeedDataSource x:Name="DataSource" />
+            <vm:MainViewModel x:Name="DataSource" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

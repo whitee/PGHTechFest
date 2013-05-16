@@ -1,0 +1,90 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="PGHTechFest.Pages.Sessions"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
+    d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
+    DataContext="{Binding MainViewModel, RelativeSource={RelativeSource Self}}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Pittsburgh TechFest" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Sessions" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <phone:LongListSelector ItemsSource="{Binding Sessions}"
+                                    JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"
+                                    IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False">
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Text="{Binding timeslot}"/>
+                            <TextBlock Text="{Binding track}"/>
+                            <TextBlock Text="{Binding presenter}"/>
+                            <TextBlock Text="{Binding room}"/>
+                            <TextBlock Text="{Binding title}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding description}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding notes}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </phone:LongListSelector.ItemTemplate>
+                <phone:LongListSelector.ListHeaderTemplate>
+                    <DataTemplate>
+                        <Border Background="White" Opacity="1" Height="70">
+                            <TextBlock Text="Binding Key}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" />
+                        </Border>
+                    </DataTemplate>
+                </phone:LongListSelector.ListHeaderTemplate>
+                <phone:LongListSelector.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Border HorizontalAlignment="Left" Background="DarkGreen" Margin="6">
+                            <TextBlock Text="{Binding timeslot}"
+                   FontSize="26" Padding="6"
+                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   TextWrapping="Wrap" FontStretch="Condensed" />
+                        </Border>
+                    </DataTemplate>
+                </phone:LongListSelector.GroupHeaderTemplate>
+            </phone:LongListSelector>
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="GridCellSize"  Value="113,113"/>
+            <Setter Property="LayoutMode" Value="Grid" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border Background="Red" Width="113" Height="113" Margin="6" >
+                            <TextBlock Text="{Binding time}"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="48" Padding="6"
+                                               Foreground="Blue"
+                                               VerticalAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+</phone:PhoneApplicationPage>

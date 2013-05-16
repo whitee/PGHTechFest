@@ -3,16 +3,18 @@ using PGHTechFest.API.Providers;
 using PGHTechFest.API.Services;
 using PGHTechFest.Common;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#if NETFX_CORE
 using Windows.UI.Xaml.Data;
+#elif WINDOWS_PHONE
+using System.ComponentModel;
+using System.Windows.Data;
+#endif
 
-namespace PGHTechFest.DataModel
+namespace PGHTechFest.ViewModels
 {
-    public class FeedDataSource : BindableBase
+    public class MainViewModel : BindableBase
     {
         private APIService _feedService;
 
@@ -32,7 +34,9 @@ namespace PGHTechFest.DataModel
             set { _Presenters = value; 
                 OnPropertyChanged();
                 CollectionViewSource presenterGroups = new CollectionViewSource();
+#if NETFX_CORE
                 presenterGroups.IsSourceGrouped = true;
+#endif
                 var letterGroups = from s in _Presenters
                                      orderby s.fullname ascending
                                      group s by s.fullname[0] into g
@@ -58,7 +62,9 @@ namespace PGHTechFest.DataModel
                 OnPropertyChanged();
 
                 CollectionViewSource sessionGroups = new CollectionViewSource();
+#if NETFX_CORE
                 sessionGroups.IsSourceGrouped = true;
+#endif
                 var timeslotGroups = from s in _Sessions
                                      orderby s.track ascending
                               group s by s.track into g
@@ -82,7 +88,9 @@ namespace PGHTechFest.DataModel
             set { _Presentessions = value;
                 OnPropertyChanged();
                 CollectionViewSource sessionGroups = new CollectionViewSource();
+#if NETFX_CORE
                 sessionGroups.IsSourceGrouped = true;
+#endif
                 var timeslotGroups = from s in _Presentessions
                                      orderby s.time_sort ascending
                                      group s by s.time into g
@@ -100,7 +108,7 @@ namespace PGHTechFest.DataModel
         }
         #endregion
 
-        public FeedDataSource()
+        public MainViewModel()
         {
             _feedService = new APIService(new WebAPIProvider());
             _feedService.PresenterQueryComplete += PresenterQueryComplete_Handler;

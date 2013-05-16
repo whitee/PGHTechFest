@@ -1,18 +1,12 @@
 ﻿using PGHTechFest.API.Models;
 using PGHTechFest.API.Providers;
-using PGHTechFest.Common;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PGHTechFest.DataModel
+namespace PGHTechFest.ViewModels
 {
-    public class DesignDataSource : FeedDataSource
+    public class DesignViewModel : MainViewModel
     {
-        public DesignDataSource()
+        public DesignViewModel()
         {
             Initialize();
         }
