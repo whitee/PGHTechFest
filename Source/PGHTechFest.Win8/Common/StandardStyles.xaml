@@ -399,6 +399,14 @@
         </Setter>
     </Style>
 
+    
+
+    <Style x:Key="ScheduleAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="ScheduleAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Schedule"/>
+        <Setter Property="Content" Value="&#xE1DC;"/>
+    </Style>
+
     <Style x:Key="SpeakersAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="SpeakersAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Speakers"/>

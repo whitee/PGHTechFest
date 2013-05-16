@@ -29,7 +29,24 @@ namespace PGHTechFest.DataModel
         public ObservableCollection<Presenter> Presenters
         {
             get { return _Presenters; }
-            set { _Presenters = value; OnPropertyChanged(); }
+            set { _Presenters = value; 
+                OnPropertyChanged();
+                CollectionViewSource presenterGroups = new CollectionViewSource();
+                presenterGroups.IsSourceGrouped = true;
+                var letterGroups = from s in _Presenters
+                                     orderby s.fullname ascending
+                                     group s by s.fullname[0] into g
+                                     select new GroupInfoList<Presenter>(g.Key, g.ToList());
+                presenterGroups.Source = letterGroups;
+                PresenterGroups = presenterGroups.View;
+            }
+        }
+
+        private ICollectionView _PresentersGroups;
+        public ICollectionView PresenterGroups
+        {
+            get { return _PresentersGroups; }
+            set { _PresentersGroups = value; OnPropertyChanged(); }
         }
 
         ObservableCollection<Session> _Sessions;
@@ -43,8 +60,8 @@ namespace PGHTechFest.DataModel
                 CollectionViewSource sessionGroups = new CollectionViewSource();
                 sessionGroups.IsSourceGrouped = true;
                 var timeslotGroups = from s in _Sessions
-                                     orderby s.presenter ascending
-                              group s by s.timeslot into g
+                                     orderby s.track ascending
+                              group s by s.track into g
                               select new GroupInfoList<Session>(g.Key, g.ToList());
                 sessionGroups.Source = timeslotGroups;
                 SessionGroups = sessionGroups.View;

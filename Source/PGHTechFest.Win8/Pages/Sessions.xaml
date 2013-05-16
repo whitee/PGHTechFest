@@ -58,19 +58,30 @@
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" /> 
-                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
-                                    </StackPanel>
-                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource SessionGrouptoSessionTopicsConverter}}" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" TextTrimming="WordEllipsis"  TextWrapping="Wrap" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="1" Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource SessionGrouptoSessionTopicsConverter}}" VerticalAlignment="Bottom" />
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Horizontal" VerticalChildrenAlignment="Center" Margin="120,0,0,0"/>
+                                <WrapGrid Orientation="Vertical" Margin="0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -79,9 +90,10 @@
                                 <Setter Property="Padding" Value="10" />
                                 <Setter Property="Background" Value="DarkGreen" />
                                 <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="Width" Value="400" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="Width" Value="420" />
+                                <Setter Property="Height" Value="140" />
                             </Style>
                         </GridView.ItemContainerStyle>
                     </GridView>
@@ -104,7 +116,7 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Vertical"/>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -113,8 +125,8 @@
                                 <Setter Property="Padding" Value="10" />
                                 <Setter Property="Background" Value="DarkGreen" />
                                 <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                 <Setter Property="Width" Value="400" />
                             </Style>
                         </GridView.ItemContainerStyle>
@@ -193,7 +205,7 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
-                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="SessionsPage_Click" />
+                <Button Grid.Column="1" Style="{StaticResource ScheduleAppBarButtonStyle}" Click="SchedulePage_Click" />
                 
             </Grid>
         </AppBar>

@@ -19,9 +19,9 @@ namespace PGHTechFest.Pages
     /// <summary>
     /// A basic page that provides characteristics common to most applications.
     /// </summary>
-    public sealed partial class Presentessions : PGHTechFest.Common.LayoutAwarePage
+    public sealed partial class Schedule : PGHTechFest.Common.LayoutAwarePage
     {
-        public Presentessions()
+        public Schedule()
         {
             this.InitializeComponent();
 

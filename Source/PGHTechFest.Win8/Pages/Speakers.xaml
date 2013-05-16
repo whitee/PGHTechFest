@@ -16,7 +16,10 @@
     <Page.Resources>
         <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
         <converter:EmptyStringToVisibilityConverter x:Name="EmptyStringToVisibilityConverter" />
-        
+        <CollectionViewSource x:Key="PresenterGroups"
+                          IsSourceGrouped="True"
+                          Source="{Binding PresenterGroups}"
+                          />
     </Page.Resources>
 
     <!--
@@ -43,66 +46,124 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <GridView  ItemsSource="{Binding Presenters}" SelectionMode="None">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-						<Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+        <SemanticZoom Grid.Row="1"  x:Name="SessionZoom">
+            <SemanticZoom.ZoomedOutView>
+                <GridView>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                </StackPanel>
+                                <!--<TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentessionGrouptoPresentessionTopicsConverter}}" />-->
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical" VerticalChildrenAlignment="Center" Margin="120,0,0,0"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="4" />
+                            <Setter Property="Padding" Value="10" />
+                            <Setter Property="Background" Value="DarkGreen" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="Width" Value="400" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
 
-                            <TextBlock Text="{Binding name}" Style="{StaticResource PageSubheaderTextStyle}"/>
-                            
-                            <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"/>
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,0,12,4"/>
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <HyperlinkButton Content="{Binding twitter}" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}"  Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+            <SemanticZoom.ZoomedInView>
+                <GridView ItemsSource="{Binding PresenterGroups}" SelectionMode="None" IsSwipeEnabled="True" >
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
+                                <TextBlock Text="{Binding name}" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,12,12" FontWeight="Thin" />
 
-                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}">
-                                        <TextBlock Text="Blog: " VerticalAlignment="Center"/>
-                                        <HyperlinkButton Content="{Binding blog_url}" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" Margin="-16,0,0,-2"/>
-                                    </StackPanel>
-                                    <HyperlinkButton Grid.Row="3" Content="Github" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"  TextTrimming="WordEllipsis"/>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,6,12,4"/>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <HyperlinkButton Content="{Binding twitter}" Padding="16,-3,16,-3" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}"  Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                        <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
+                                        <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" Padding="16,-3,16,-3" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                        <HyperlinkButton Grid.Row="3" Content="Github" Padding="16,-3,16,-3" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                    </Grid>
                                 </Grid>
                             </Grid>
-						</Grid>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-				<GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VariableSizedWrapGrid Margin="120,0,0,0" Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="Margin" Value="4" />
-                        <Setter Property="Padding" Value="10" />
-                        <Setter Property="Background" Value="DarkGreen" />
-                        <Setter Property="BorderThickness" Value="1" />
-                        <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        <Setter Property="VerticalContentAlignment" Value="Center" />
-                        <Setter Property="Width" Value="400" />
-                    </Style>
-                </GridView.ItemContainerStyle>
-            </GridView>
-        </Grid>
-
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical" Margin="120,0,0,0"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="4" />
+                            <Setter Property="Padding" Value="10" />
+                            <Setter Property="Background" Value="DarkGreen" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="Width" Value="400" />
+                            <Setter Property="Height" Value="200" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="1,0,0,6">
+                                        <Button
+                                    AutomationProperties.Name="Group Title"
+                                    Style="{StaticResource TextPrimaryButtonStyle}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Key}"  Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                                <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,80,0"/>
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+        </SemanticZoom>
+        
         <VisualStateManager.VisualStateGroups>
 
             <!-- Visual states reflect the application's view state -->
@@ -146,8 +207,8 @@
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
-                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="PresentessionsPage_Click" />
+                <Button Style="{StaticResource SessionsAppBarButtonStyle}"  Click="SessionsPage_Click"  />
+                <Button Grid.Column="1" Style="{StaticResource ScheduleAppBarButtonStyle}" Click="SchedulePage_Click" />
 
             </Grid>
         </AppBar>

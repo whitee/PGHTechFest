@@ -117,8 +117,8 @@
     <Compile Include="DataModel\DesignDataSource.cs" />
     <Compile Include="DataModel\FeedDataSource.cs" />
     <Compile Include="DataModel\GroupInfoList.cs" />
-    <Compile Include="Pages\Presentessions.xaml.cs">
-      <DependentUpon>Presentessions.xaml</DependentUpon>
+    <Compile Include="Pages\Schedule.xaml.cs">
+      <DependentUpon>Schedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Sessions.xaml.cs">
       <DependentUpon>Sessions.xaml</DependentUpon>
@@ -160,7 +160,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Presentessions.xaml">
+    <Page Include="Pages\Schedule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
