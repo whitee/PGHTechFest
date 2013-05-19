@@ -33,6 +33,11 @@ namespace PGHTechFest.Pages
             NavigationService.Navigate(new Uri("/Pages/Schedule.xaml", UriKind.Relative));
         }
 
+        public void About_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/About.xaml", UriKind.Relative));
+        }
+
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             string uri = (sender as FrameworkElement).Tag as string;

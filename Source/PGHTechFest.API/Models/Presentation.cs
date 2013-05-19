@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PGHTechFest.API.Models
 {
-    public class Presentession
+    public class Presentation
     {
         public string id { get; set; }
         public string time { get; set; }

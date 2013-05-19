@@ -16,8 +16,7 @@
         <SolidColorBrush x:Key="ItemForeground" Color="#FF000000"/>
 
         <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
-            <Setter Property="GridCellSize"  Value="333,113"/>
-            <Setter Property="LayoutMode" Value="Grid" />
+            <Setter Property="LayoutMode" Value="List" />
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -26,7 +25,7 @@
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                FontSize="32" Padding="6"
                                                Foreground="Black"
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center" TextWrapping="Wrap"/>
                         </Border>
                     </DataTemplate>
                 </Setter.Value>

@@ -62,7 +62,7 @@
                                     <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
                                     <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                 </StackPanel>
-                                <!--<TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentessionGrouptoPresentessionTopicsConverter}}" />-->
+                                <!--<TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentationGrouptoPresentationTopicsConverter}}" />-->
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>

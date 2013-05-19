@@ -12,7 +12,7 @@ namespace PGHTechFest.API.Services
 
         public EventHandler<APIQueryArgs> PresenterQueryComplete;
         public EventHandler<APIQueryArgs> SessionQueryComplete;
-        public EventHandler<APIQueryArgs> PresentessionQueryComplete;
+        public EventHandler<APIQueryArgs> PresentationQueryComplete;
         private APIProvider _APIProvider;
 
         public APIService(APIProvider provider)
@@ -32,10 +32,10 @@ namespace PGHTechFest.API.Services
                 SessionQueryComplete.Invoke(this, new APIQueryArgs(await _APIProvider.GetSessionsAsync()));
         }
 
-        async public void QueryPresentessions()
+        async public void QueryPresentations()
         {
-            if (PresentessionQueryComplete != null)
-                PresentessionQueryComplete.Invoke(this, new APIQueryArgs(await _APIProvider.GetPresentessionsAsync()));
+            if (PresentationQueryComplete != null)
+                PresentationQueryComplete.Invoke(this, new APIQueryArgs(await _APIProvider.GetPresentationsAsync()));
         }
     }
 }

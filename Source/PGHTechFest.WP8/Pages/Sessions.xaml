@@ -70,6 +70,8 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/speakers-icon.png" Text="Speakers" Click="Speakers_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/schedule-icon.png" Text="Schedule"  Click="Schedule_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.settings.png" Text="About"  Click="About_Click"/>
+
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </pages:BasePage>

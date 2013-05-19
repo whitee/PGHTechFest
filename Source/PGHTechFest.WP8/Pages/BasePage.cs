@@ -41,17 +41,17 @@ namespace PGHTechFest.Pages
 
         public void Sessions_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/Sessions.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/Sessions.xaml", UriKind.Relative));
         }
 
         public void Speakers_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/Speakers.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/Speakers.xaml", UriKind.Relative));
         }
 
         public void Schedule_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/Schedule.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/Schedule.xaml", UriKind.Relative));
         }
     }
 }

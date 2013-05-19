@@ -13,7 +13,7 @@ namespace PGHTechFest.API.Providers
     {
         private string _presenters_uri = "http://pghtechfest.com/presenters.json";
         private string _session_list_uri = "http://pghtechfest.com/session_list.json";
-        private string _presentession_list_uri = "http://pghtechfest.com/sessions-presenters.json";
+        private string _presentation_list_uri = "http://pghtechfest.com/sessions-presenters.json";
 
         public WebAPIProvider()
         { }
@@ -40,13 +40,13 @@ namespace PGHTechFest.API.Providers
                 return null;
         }
 
-        async public Task<List<Presentession>> GetPresentessionsAsync()
+        async public Task<List<Presentation>> GetPresentationsAsync()
         {
             HttpClient client = new HttpClient();
-            string payload = await client.GetStringAsync(_presentession_list_uri);
+            string payload = await client.GetStringAsync(_presentation_list_uri);
 
             if (!string.IsNullOrWhiteSpace(payload))
-                return JsonConvert.DeserializeObject<PresentessionFeed>(payload).AllSessions;
+                return JsonConvert.DeserializeObject<PresentationFeed>(payload).AllSessions;
             else
                 return null;
         }

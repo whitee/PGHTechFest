@@ -15,11 +15,11 @@
 
     <Page.Resources>
         <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
-        <converter:PresentessionGrouptoPresentessionTopicsConverter x:Name="PresentessionGrouptoPresentessionTopicsConverter" />
+        <converter:PresentationGrouptoPresentationTopicsConverter x:Name="PresentationGrouptoPresentationTopicsConverter" />
 
-        <CollectionViewSource x:Key="PresentessionGroups"
+        <CollectionViewSource x:Key="PresentationGroups"
                           IsSourceGrouped="True"
-                          Source="{Binding PresentessionGroups}"
+                          Source="{Binding PresentationGroups}"
                           />
     </Page.Resources>
 
@@ -66,7 +66,7 @@
                                         <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" /> 
                                         <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
                                     </StackPanel>
-                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentessionGrouptoPresentessionTopicsConverter}}" />
+                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource PresentationGrouptoPresentationTopicsConverter}}" />
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
@@ -91,7 +91,7 @@
                 </SemanticZoom.ZoomedOutView>
 
                 <SemanticZoom.ZoomedInView>
-                    <GridView ItemsSource="{Binding PresentessionGroups}" SelectionMode="None" IsSwipeEnabled="True" >
+                    <GridView ItemsSource="{Binding PresentationGroups}" SelectionMode="None" IsSwipeEnabled="True" >
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel MaxWidth="400">

@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
     xmlns:pages="clr-namespace:PGHTechFest.Pages"
+    xmlns:converter="clr-namespace:PGHTechFest.Converters"
     d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,7 +18,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.Resources>
-        
+        <converter:BooleanNegationConverter x:Key="BooleanNegationConverter" />
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
@@ -35,10 +36,11 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:LongListSelector ItemsSource="{Binding PresentessionGroups}"
+            <phone:LongListSelector x:Name="ScheduleList"
+                                    ItemsSource="{Binding PresentationGroups}"
                                     JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"
                                     IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False" Foreground="{StaticResource ItemForeground}" 
-                                    GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}">
+                                    GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}" SelectionChanged="LongListSelector_SelectionChanged">
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="0,0,0,12" BorderBrush="White" Background="{StaticResource ItemBackground}" BorderThickness="2">
@@ -71,12 +73,14 @@
                     </DataTemplate>
                 </phone:LongListSelector.ListHeaderTemplate>-->
             </phone:LongListSelector>
+            <ProgressBar IsIndeterminate="{Binding IsInitialized, Converter={StaticResource BooleanNegationConverter}}" />
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/speakers-icon.png" Text="Speakers" Click="Speakers_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/sessions-icon.png" Text="Sessions"  Click="Sessions_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.settings.png" Text="About"  Click="About_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 </pages:BasePage>

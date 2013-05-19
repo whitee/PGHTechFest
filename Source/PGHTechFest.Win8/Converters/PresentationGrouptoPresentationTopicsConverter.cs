@@ -9,7 +9,7 @@ using Windows.UI.Xaml.Data;
 
 namespace PGHTechFest.Converters
 {
-    public class PresentessionGrouptoPresentessionTopicsConverter : IValueConverter
+    public class PresentationGrouptoPresentationTopicsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -17,7 +17,7 @@ namespace PGHTechFest.Converters
                 return "";
             else
             {
-                return (value as List<Presentession>).Aggregate<Presentession, string>("Presenters:", (a, b) => { return a + ((a.Length > 11) ? ", " : " ") + b.presenters_name; });
+                return (value as List<Presentation>).Aggregate<Presentation, string>("Presenters:", (a, b) => { return a + ((a.Length > 11) ? ", " : " ") + b.presenters_name; });
             }
         }
 

@@ -13,10 +13,10 @@ namespace PGHTechFest.ViewModels
 
         public override void Initialize()
         {
-            PackageAPIProvider provider = new PackageAPIProvider();
+            MockAPIProvider provider = new MockAPIProvider();
             Presenters = new ObservableCollection<Presenter>(provider.GetPresenters());
             Sessions = new ObservableCollection<Session>(provider.GetSessions());
-            Presentessions = new ObservableCollection<Presentession>(provider.GetPresentessions());
+            Presentations = new ObservableCollection<Presentation>(provider.GetPresentations());
         }
     }
 }

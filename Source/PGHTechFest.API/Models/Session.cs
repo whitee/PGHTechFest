@@ -25,5 +25,24 @@ namespace PGHTechFest.API.Models
         public object modified { get; set; }
         public string active { get; set; }
         public object track_id { get; set; }
+
+        public void Copy(Session obj)
+        {
+            this.active = obj.active;
+            this.created = obj.created;
+            this.description = obj.description;
+            this.id = obj.id;
+            this.length = obj.id;
+            this.modified = obj.modified;
+            this.notes = obj.notes;
+            this.presenter = obj.presenter;
+            this.presenter_id = obj.presenter_id;
+            this.room = obj.room;
+            this.timeslot = obj.timeslot;
+            this.timeslot_id = obj.timeslot_id;
+            this.title = obj.title;
+            this.track = obj.track;
+            this.track_id = obj.track_id;
+        }
     }
 }

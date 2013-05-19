@@ -6,6 +6,6 @@ namespace PGHTechFest.API.Providers
     {
         Task<System.Collections.Generic.List<PGHTechFest.API.Models.Presenter>> GetPresentersAsync();
         Task<System.Collections.Generic.List<PGHTechFest.API.Models.Session>> GetSessionsAsync();
-        Task<System.Collections.Generic.List<PGHTechFest.API.Models.Presentession>> GetPresentessionsAsync();
+        Task<System.Collections.Generic.List<PGHTechFest.API.Models.Presentation>> GetPresentationsAsync();
     }
 }

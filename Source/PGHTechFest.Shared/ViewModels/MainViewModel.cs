@@ -22,11 +22,12 @@ namespace PGHTechFest.ViewModels
         public EventHandler InitializationComplete;
 
         private bool _isSessionReady;
-        private bool _isPresentessionReady;
+        private bool _isPresentationReady;
         private bool _isPresenterReady;
 
         #region Properties
-        public bool IsInitialized { get; set; }
+        private bool _IsInitialized;
+        public bool IsInitialized { get { return _IsInitialized; } set { _IsInitialized = value; OnPropertyChanged(); } }
 
         ObservableCollection<Presenter> _Presenters;
         public ObservableCollection<Presenter> Presenters
@@ -114,46 +115,46 @@ namespace PGHTechFest.ViewModels
         }
 #endif
 
-        ObservableCollection<Presentession> _Presentessions;
-        public ObservableCollection<Presentession> Presentessions
+        ObservableCollection<Presentation> _Presentations;
+        public ObservableCollection<Presentation> Presentations
         {
-            get { return _Presentessions; }
-            set { _Presentessions = value;
+            get { return _Presentations; }
+            set { _Presentations = value;
                 OnPropertyChanged();
                 CollectionViewSource sessionGroups = new CollectionViewSource();
 #if NETFX_CORE
                 sessionGroups.IsSourceGrouped = true;
 
-                var timeslotGroups = from s in _Presentessions
+                var timeslotGroups = from s in _Presentations
                                      orderby s.time_sort ascending
                                      group s by s.time into g
-                                     select new GroupInfoList<Presentession>(g.Key, g.ToList());
+                                     select new GroupInfoList<Presentation>(g.Key, g.ToList());
                 sessionGroups.Source = timeslotGroups;
-                PresentessionGroups = sessionGroups.View;
+                PresentationGroups = sessionGroups.View;
 #elif WINDOWS_PHONE
-                var timeslotGroups = from s in _Presentessions
+                var timeslotGroups = from s in _Presentations
                                      orderby s.time_sort ascending
                                      group s by s.time into g
-                                     select new Group<Presentession>(g.Key, g.ToList());
+                                     select new Group<Presentation>(g.Key, g.ToList());
 
-                PresentessionGroups = new ObservableCollection<Group<Presentession>>(timeslotGroups);
+                PresentationGroups = new ObservableCollection<Group<Presentation>>(timeslotGroups);
 #endif
             }
         }
 
 #if NETFX_CORE
-        private ICollectionView _PresentessionGroups;
-        public ICollectionView PresentessionGroups
+        private ICollectionView _PresentationGroups;
+        public ICollectionView PresentationGroups
         {
-            get { return _PresentessionGroups; }
-            set { _PresentessionGroups = value; OnPropertyChanged(); }
+            get { return _PresentationGroups; }
+            set { _PresentationGroups = value; OnPropertyChanged(); }
         }
 #elif WINDOWS_PHONE
-        private ObservableCollection<Group<Presentession>> _PresentessionGroups;
-        public ObservableCollection<Group<Presentession>> PresentessionGroups
+        private ObservableCollection<Group<Presentation>> _PresentationGroups;
+        public ObservableCollection<Group<Presentation>> PresentationGroups
         {
-            get { return _PresentessionGroups; }
-            set { _PresentessionGroups = value; OnPropertyChanged(); }
+            get { return _PresentationGroups; }
+            set { _PresentationGroups = value; OnPropertyChanged(); }
         }
 #endif
         #endregion
@@ -163,8 +164,8 @@ namespace PGHTechFest.ViewModels
             _feedService = new APIService(new WebAPIProvider());
             _feedService.PresenterQueryComplete += PresenterQueryComplete_Handler;
             _feedService.SessionQueryComplete += SessionsQueryComplete_Handler;
-            _feedService.PresentessionQueryComplete += PresentessionsQueryComplete_Handler;
-            _isPresentessionReady = _isSessionReady = _isPresenterReady = false;
+            _feedService.PresentationQueryComplete += PresentationsQueryComplete_Handler;
+            _isPresentationReady = _isSessionReady = _isPresenterReady = false;
         }
 
         public void PresenterQueryComplete_Handler(object sender, APIQueryArgs e)
@@ -196,7 +197,7 @@ namespace PGHTechFest.ViewModels
 
         private void CheckInitializationComplete()
         {
-            if (!IsInitialized && _isSessionReady && _isPresentessionReady && _isPresenterReady)
+            if (!IsInitialized && _isSessionReady && _isPresentationReady && _isPresenterReady)
             {
                 IsInitialized = true;
                 if (InitializationComplete != null)
@@ -208,15 +209,15 @@ namespace PGHTechFest.ViewModels
             }
         }
 
-        public void PresentessionsQueryComplete_Handler(object sender, APIQueryArgs e)
+        public void PresentationsQueryComplete_Handler(object sender, APIQueryArgs e)
         {
-            if (e.Presentessions != null)
+            if (e.Presentations != null)
             {
-                Presentessions = new ObservableCollection<Presentession>(e.Presentessions);
-                _isPresentessionReady = true;
+                Presentations = new ObservableCollection<Presentation>(e.Presentations);
+                _isPresentationReady = true;
             }
             else
-                _isPresentessionReady = false;
+                _isPresentationReady = false;
 
             CheckInitializationComplete();
 
@@ -226,7 +227,7 @@ namespace PGHTechFest.ViewModels
         {
             _feedService.QueryPresenters();
             _feedService.QuerySessions();
-            _feedService.QueryPresentessions();
+            _feedService.QueryPresentations();
         }
 
     }

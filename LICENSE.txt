@@ -1,3 +1,10 @@
+The Pittsburgh TechFest logo and API is licensed under a Creative Commons 
+Attribution-NonCommercial-NoDerivs 3.0 Unported License.
+
+http://creativecommons.org/licenses/by-nc-nd/3.0/deed.en_US
+
+===========================================================================
+
 The MIT License (MIT)
 
 Copyright (c) 2013 Evan White
