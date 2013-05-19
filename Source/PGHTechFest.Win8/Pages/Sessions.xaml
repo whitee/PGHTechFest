@@ -34,6 +34,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Image Source="ms-appx:///Images/Branding.png" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="None"/>
+
         <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -50,7 +52,7 @@
 
         <Grid Grid.Row="1" x:Name="SessionPanel" >
             
-            <SemanticZoom Margin="120,0,0,0" Grid.Row="1"  x:Name="SessionZoom">
+            <SemanticZoom Grid.Row="1"  x:Name="SessionZoom">
                 <SemanticZoom.ZoomedOutView>
                     <GridView>
                         <GridView.ItemTemplate>
@@ -81,14 +83,15 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid Orientation="Vertical" Margin="0"/>
+                                <WrapGrid Orientation="Vertical"  Margin="120,0,0,0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="Margin" Value="4" />
                                 <Setter Property="Padding" Value="10" />
-                                <Setter Property="Background" Value="DarkGreen" />
+                                <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                                <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -116,14 +119,15 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" Margin="120,0,0,0" />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="Margin" Value="4" />
                                 <Setter Property="Padding" Value="10" />
-                                <Setter Property="Background" Value="DarkGreen" />
+                                <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                                <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />

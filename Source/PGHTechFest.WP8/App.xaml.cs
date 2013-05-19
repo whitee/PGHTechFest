@@ -46,7 +46,7 @@ namespace PGHTechFest
             UnhandledException += Application_UnhandledException;
 
             // Standard XAML initialization
-            //InitializeComponent();
+            InitializeComponent();
 
             // Phone-specific initialization
             InitializePhoneApplication();

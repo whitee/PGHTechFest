@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Data;
 #elif WINDOWS_PHONE
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Collections.Generic;
 #endif
 
 namespace PGHTechFest.ViewModels
@@ -36,22 +37,38 @@ namespace PGHTechFest.ViewModels
                 CollectionViewSource presenterGroups = new CollectionViewSource();
 #if NETFX_CORE
                 presenterGroups.IsSourceGrouped = true;
-#endif
                 var letterGroups = from s in _Presenters
-                                     orderby s.fullname ascending
-                                     group s by s.fullname[0] into g
-                                     select new GroupInfoList<Presenter>(g.Key, g.ToList());
+                                   orderby s.fullname ascending
+                                   group s by s.fullname.ToUpper()[0] into g
+                                   select new GroupInfoList<Presenter>(g.Key, g.ToList());
                 presenterGroups.Source = letterGroups;
                 PresenterGroups = presenterGroups.View;
+#elif WINDOWS_PHONE
+                var groupList = from p in _Presenters
+                                orderby p.fullname ascending
+                                group p by p.fullname.ToUpper()[0] into g 
+                                select new Group<Presenter>(g.Key, g.ToList());
+
+                PresenterGroups = new ObservableCollection<Group<Presenter>>(groupList.ToList());
+#endif
             }
         }
 
-        private ICollectionView _PresentersGroups;
+        #if NETFX_CORE
+        private ICollectionView _PresenterGroups;
         public ICollectionView PresenterGroups
         {
-            get { return _PresentersGroups; }
-            set { _PresentersGroups = value; OnPropertyChanged(); }
+            get { return _PresenterGroups; }
+            set { _PresenterGroups = value; OnPropertyChanged(); }
         }
+        #elif WINDOWS_PHONE
+        private ObservableCollection<Group<Presenter>> _PresenterGroups;
+        public ObservableCollection<Group<Presenter>> PresenterGroups
+        {
+            get { return _PresenterGroups; }
+            set { _PresenterGroups = value; OnPropertyChanged(); }
+        }
+        #endif
 
         ObservableCollection<Session> _Sessions;
         public ObservableCollection<Session> Sessions
@@ -64,22 +81,38 @@ namespace PGHTechFest.ViewModels
                 CollectionViewSource sessionGroups = new CollectionViewSource();
 #if NETFX_CORE
                 sessionGroups.IsSourceGrouped = true;
-#endif
                 var timeslotGroups = from s in _Sessions
-                                     orderby s.track ascending
-                              group s by s.track into g
-                              select new GroupInfoList<Session>(g.Key, g.ToList());
+                                    orderby s.track ascending
+                                    group s by s.track into g
+                                    select new GroupInfoList<Session>(g.Key, g.ToList());
                 sessionGroups.Source = timeslotGroups;
                 SessionGroups = sessionGroups.View;
+#elif WINDOWS_PHONE
+                var timeslotGroups = from s in _Sessions
+                                     orderby s.track ascending
+                                     group s by s.track into g
+                                     select new Group<Session>(g.Key, g.ToList());
+
+                SessionGroups = new ObservableCollection<Group<Session>>(timeslotGroups);
+#endif
             }
         }
 
+#if NETFX_CORE
         private ICollectionView _SessionGroups;
         public ICollectionView SessionGroups
         {
             get { return _SessionGroups; }
             set { _SessionGroups = value; OnPropertyChanged(); }
         }
+#elif WINDOWS_PHONE
+        private ObservableCollection<Group<Session>> _SessionGroups;
+        public ObservableCollection<Group<Session>> SessionGroups
+        {
+            get { return _SessionGroups; }
+            set { _SessionGroups = value; OnPropertyChanged(); }
+        }
+#endif
 
         ObservableCollection<Presentession> _Presentessions;
         public ObservableCollection<Presentession> Presentessions
@@ -90,22 +123,39 @@ namespace PGHTechFest.ViewModels
                 CollectionViewSource sessionGroups = new CollectionViewSource();
 #if NETFX_CORE
                 sessionGroups.IsSourceGrouped = true;
-#endif
+
                 var timeslotGroups = from s in _Presentessions
                                      orderby s.time_sort ascending
                                      group s by s.time into g
                                      select new GroupInfoList<Presentession>(g.Key, g.ToList());
                 sessionGroups.Source = timeslotGroups;
                 PresentessionGroups = sessionGroups.View;
+#elif WINDOWS_PHONE
+                var timeslotGroups = from s in _Presentessions
+                                     orderby s.time_sort ascending
+                                     group s by s.time into g
+                                     select new Group<Presentession>(g.Key, g.ToList());
+
+                PresentessionGroups = new ObservableCollection<Group<Presentession>>(timeslotGroups);
+#endif
             }
         }
 
+#if NETFX_CORE
         private ICollectionView _PresentessionGroups;
         public ICollectionView PresentessionGroups
         {
             get { return _PresentessionGroups; }
             set { _PresentessionGroups = value; OnPropertyChanged(); }
         }
+#elif WINDOWS_PHONE
+        private ObservableCollection<Group<Presentession>> _PresentessionGroups;
+        public ObservableCollection<Group<Presentession>> PresentessionGroups
+        {
+            get { return _PresentessionGroups; }
+            set { _PresentessionGroups = value; OnPropertyChanged(); }
+        }
+#endif
         #endregion
 
         public MainViewModel()

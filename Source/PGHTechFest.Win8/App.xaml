@@ -14,12 +14,18 @@
                     Required by Visual Studio project and item templates
                  -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
+                <ResourceDictionary Source="Common/YellowThemeStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Application-specific resources -->
 
             <x:String x:Key="AppName">Pittsburgh TechFest</x:String>
             <vm:MainViewModel x:Name="DataSource" />
+
+            <SolidColorBrush x:Key="ItemBackground" Color="#FFF6D23A"/>
+            <SolidColorBrush x:Key="ItemForeground" Color="#FF000000"/>
+            <!--<SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="White" />-->
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

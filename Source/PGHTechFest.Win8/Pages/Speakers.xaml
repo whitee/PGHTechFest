@@ -33,6 +33,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Image Source="ms-appx:///Images/Branding.png" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="None"/>
+
         <!-- Back button and page title -->
         <Grid>
             <Grid.ColumnDefinitions>
@@ -73,7 +75,8 @@
                         <Style TargetType="GridViewItem">
                             <Setter Property="Margin" Value="4" />
                             <Setter Property="Padding" Value="10" />
-                            <Setter Property="Background" Value="DarkGreen" />
+                            <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                            <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -111,10 +114,10 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
-                                        <HyperlinkButton Content="{Binding twitter}" Padding="16,-3,16,-3" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}"  Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                        <HyperlinkButton Content="{Binding twitter}" Padding="16,-3,16,-3" Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
                                         <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
-                                        <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" Padding="16,-3,16,-3" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
-                                        <HyperlinkButton Grid.Row="3" Content="Github" Padding="16,-3,16,-3" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
+                                        <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" Padding="16,-3,16,-3" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                        <HyperlinkButton Grid.Row="3" Content="Github" Padding="16,-3,16,-3" Margin="-16,0,0,0" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -129,7 +132,8 @@
                         <Style TargetType="GridViewItem">
                             <Setter Property="Margin" Value="4" />
                             <Setter Property="Padding" Value="10" />
-                            <Setter Property="Background" Value="DarkGreen" />
+                            <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                            <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="VerticalContentAlignment" Value="Center" />

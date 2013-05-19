@@ -15,8 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PGHTechFest.Win8.App">
-      <VisualElements DisplayName="PGHTechFest.Win8" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="A .NET project to parse the Pittsburgh TechFest API data and display it for confernce attendees" ForegroundText="light" BackgroundColor="#FFFFFF">
-        <LockScreen Notification=""  />
+      <VisualElements DisplayName="PGHTechFest" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="A .NET project to parse the Pittsburgh TechFest API data and display it for confernce attendees" ForegroundText="light" BackgroundColor="#FFFFFF">
         <DefaultTile ShowName="noLogos" ShortName="PGHTechFest" WideLogo="Assets\WideLogo.png" />
         <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#FFFFFF" />
         <InitialRotationPreference>
