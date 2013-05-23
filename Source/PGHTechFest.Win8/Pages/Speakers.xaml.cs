@@ -25,14 +25,22 @@ namespace PGHTechFest.Pages
         {
             this.InitializeComponent();
             if (DefaultViewModel.IsInitialized)
-                (SessionZoom.ZoomedOutView as ListViewBase).ItemsSource = DefaultViewModel.PresenterGroups.CollectionGroups;
+            {
+                SetZoomedOutViewItemsSource();
+            }
             else
             {
                 DefaultViewModel.InitializationComplete += delegate(object s, EventArgs e)
                 {
-                    (SessionZoom.ZoomedOutView as ListViewBase).ItemsSource = DefaultViewModel.PresenterGroups.CollectionGroups;
+                    SetZoomedOutViewItemsSource();
                 };
             }
+        }
+
+        private void SetZoomedOutViewItemsSource()
+        {
+            if (DefaultViewModel.PresenterGroups != null)
+                (SessionZoom.ZoomedOutView as ListViewBase).ItemsSource = DefaultViewModel.PresenterGroups.CollectionGroups;
         }
 
         /// <summary>

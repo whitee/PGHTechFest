@@ -35,6 +35,11 @@ namespace PGHTechFest.Pages
             // Create an empty default view model
             this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
 
+            this.DefaultViewModel.InitializationError += delegate(object sender, EventArgs e)
+            {
+                MessageBox.Show("There was a problem getting the conference data.");
+            };
+
             if (!DefaultViewModel.IsInitialized)
                 DefaultViewModel.Initialize();
         }

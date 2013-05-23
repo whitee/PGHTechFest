@@ -57,14 +57,25 @@ namespace PGHTechFest.Common
             // Create an empty default view model
             this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
 
-            if (!DefaultViewModel.IsInitialized)
-                DefaultViewModel.Initialize();
+            this.DefaultViewModel.InitializationError += async delegate(object sender, EventArgs e)
+            {
+                Windows.UI.Popups.MessageDialog messageDialog = new Windows.UI.Popups.MessageDialog("There was a problem getting the conference data.", "Whoops");
+                messageDialog.DefaultCommandIndex = 0;
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    await messageDialog.ShowAsync();
+                });
+            };
+
 
             // When this page is part of the visual tree make two changes:
             // 1) Map application view state to visual state for the page
             // 2) Handle keyboard and mouse navigation requests
             this.Loaded += (sender, e) =>
             {
+                if (!DefaultViewModel.IsInitialized)
+                    DefaultViewModel.Initialize();
+
                 this.StartLayoutUpdates(sender, e);
 
                 // Keyboard and mouse navigation only apply when occupying the entire window
@@ -113,7 +124,6 @@ namespace PGHTechFest.Common
         {
             Frame.Navigate(typeof(Sessions));
         }
-
 
         protected void SchedulePage_Click(object sender, RoutedEventArgs e)
         {

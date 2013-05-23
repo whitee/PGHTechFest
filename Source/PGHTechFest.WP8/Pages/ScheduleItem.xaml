@@ -13,7 +13,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
-    d:DataContext="{Binding ScheduledItem, Source={d:DesignInstance Type=vm:DesignScheduledItem, IsDesignTimeCreatable=True}}"
+    d:DataContext="{Binding ScheduledItem, Source={d:DesignInstance Type=vm:DesignScheduleDetails, IsDesignTimeCreatable=True}}"
     DataContext="{Binding ScheduledItem, RelativeSource={RelativeSource Self}}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
@@ -58,7 +58,7 @@
                 <TextBlock Text="{Binding description}"  TextWrapping="Wrap" />
             </ScrollViewer>
             <Grid Grid.Row="4" 
-                d:DataContext="{Binding Presenter, Source={d:DesignInstance Type=vm:DesignScheduledItem, IsDesignTimeCreatable=True}}"
+                d:DataContext="{Binding Presenter, Source={d:DesignInstance Type=vm:DesignScheduleDetails, IsDesignTimeCreatable=True}}"
                   DataContext="{Binding Presenter, ElementName=pageRoot}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

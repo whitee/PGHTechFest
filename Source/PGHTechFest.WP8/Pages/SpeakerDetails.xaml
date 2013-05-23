@@ -12,7 +12,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
-    d:DataContext="{Binding Presenter, Source={d:DesignInstance Type=vm:DesignScheduledItem, IsDesignTimeCreatable=True}}"
+    d:DataContext="{Binding Presenter, Source={d:DesignInstance Type=vm:DesignScheduleDetails, IsDesignTimeCreatable=True}}"
     DataContext="{Binding Presenter, RelativeSource={RelativeSource Self}}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"

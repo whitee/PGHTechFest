@@ -20,6 +20,7 @@ namespace PGHTechFest.ViewModels
         private APIService _feedService;
 
         public EventHandler InitializationComplete;
+        public EventHandler InitializationError;
 
         private bool _isSessionReady;
         private bool _isPresentationReady;
@@ -165,10 +166,11 @@ namespace PGHTechFest.ViewModels
             _feedService.PresenterQueryComplete += PresenterQueryComplete_Handler;
             _feedService.SessionQueryComplete += SessionsQueryComplete_Handler;
             _feedService.PresentationQueryComplete += PresentationsQueryComplete_Handler;
+            _feedService.Failure += Failure_Handler;
             _isPresentationReady = _isSessionReady = _isPresenterReady = false;
         }
 
-        public void PresenterQueryComplete_Handler(object sender, APIQueryArgs e)
+        private void PresenterQueryComplete_Handler(object sender, APIQueryArgs e)
         {
             if (e.Presenters != null)
             {
@@ -181,7 +183,7 @@ namespace PGHTechFest.ViewModels
             CheckInitializationComplete();
         }
 
-        public void SessionsQueryComplete_Handler(object sender, APIQueryArgs e)
+        private void SessionsQueryComplete_Handler(object sender, APIQueryArgs e)
         {
             if (e.Sessions != null)
             {
@@ -197,7 +199,8 @@ namespace PGHTechFest.ViewModels
 
         private void CheckInitializationComplete()
         {
-            if (!IsInitialized && _isSessionReady && _isPresentationReady && _isPresenterReady)
+            //TODO: Clean up state.  Add Updating property that binds to progressbar 
+            if ((!IsInitialized && _isSessionReady && _isPresentationReady && _isPresenterReady) || _errorInitializing)
             {
                 IsInitialized = true;
                 if (InitializationComplete != null)
@@ -209,7 +212,7 @@ namespace PGHTechFest.ViewModels
             }
         }
 
-        public void PresentationsQueryComplete_Handler(object sender, APIQueryArgs e)
+        private void PresentationsQueryComplete_Handler(object sender, APIQueryArgs e)
         {
             if (e.Presentations != null)
             {
@@ -223,12 +226,31 @@ namespace PGHTechFest.ViewModels
 
         }
 
+        private void Failure_Handler(object sender, APIQueryArgs e)
+        {
+            if (!_errorInitializing)
+            {
+                //TODO: lock this
+                _errorInitializing = true;
+
+                if (InitializationError != null)
+                    InitializationError.Invoke(this, null);
+            }
+
+            //TODO: Display something useful.  Cached data for example.
+
+            System.Diagnostics.Debug.WriteLine(string.Format("Initialization error. [{0}]", e.Error.Message));
+        }
+
         public virtual void Initialize()
         {
+            _errorInitializing = false;
             _feedService.QueryPresenters();
             _feedService.QuerySessions();
             _feedService.QueryPresentations();
         }
 
+
+        public bool _errorInitializing { get; set; }
     }
 }

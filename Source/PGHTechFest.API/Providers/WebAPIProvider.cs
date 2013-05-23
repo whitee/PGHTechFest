@@ -20,13 +20,15 @@ namespace PGHTechFest.API.Providers
 
         async public Task<List<Presenter>> GetPresentersAsync()
         {
-            HttpClient client = new HttpClient();
-            string payload = await client.GetStringAsync(_presenters_uri);
-            
-            if (!string.IsNullOrWhiteSpace(payload))
-                return JsonConvert.DeserializeObject<PresentersFeed>(payload).Presenters;
-            else
+            try
+            {
+                var result = await GetDataAsync<PresentersFeed>(_presenters_uri);
+                return result.Presenters;
+            }
+            catch (Exception ex)
+            {
                 return null;
+            }
         }
 
         async public Task<List<Session>> GetSessionsAsync()
@@ -49,6 +51,29 @@ namespace PGHTechFest.API.Providers
                 return JsonConvert.DeserializeObject<PresentationFeed>(payload).AllSessions;
             else
                 return null;
+        }
+
+
+        async public Task<T> GetDataAsync<T>(string url)
+        {
+            HttpClient client = new HttpClient();
+            string payload;
+
+            try
+            {
+                payload = await client.GetStringAsync(url);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+
+                //rethrow for now
+            }
+
+            if (!string.IsNullOrWhiteSpace(payload))
+                return JsonConvert.DeserializeObject<T>(payload);
+            else
+                throw new InvalidOperationException("Error deserializing the feed.  Check the request response format");
         }
     }
 }

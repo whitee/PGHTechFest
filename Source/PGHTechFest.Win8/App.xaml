@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PGHTechFest"
-    xmlns:vm="using:PGHTechFest.ViewModels">
+    xmlns:vm="using:PGHTechFest.ViewModels"
+    xmlns:converter="using:PGHTechFest.Converters" >
 
     <Application.Resources>
         <ResourceDictionary>
@@ -18,6 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Application-specific resources -->
+            <converter:BooleanNegationConverter x:Key="BooleanNegationConverter" />
 
             <x:String x:Key="AppName">Pittsburgh TechFest</x:String>
             <vm:MainViewModel x:Name="DataSource" />

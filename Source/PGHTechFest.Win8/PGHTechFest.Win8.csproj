@@ -122,6 +122,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="Converters\PresentationGrouptoPresentationTopicsConverter.cs" />
     <Compile Include="Converters\SessionGrouptoSessionTopicsConverter.cs" />
