@@ -28,7 +28,20 @@ namespace PGHTechFest.ViewModels
 
         #region Properties
         private bool _IsInitialized;
-        public bool IsInitialized { get { return _IsInitialized; } set { _IsInitialized = value; OnPropertyChanged(); } }
+        public bool IsInitialized { 
+            get { return _IsInitialized; } 
+            set { _IsInitialized = value; OnPropertyChanged(); } 
+        }
+
+        private bool _IsUpdating;
+        public bool IsUpdating
+        {
+            get { return _IsUpdating; }
+            set { _IsUpdating = value; OnPropertyChanged(); }
+        }
+
+        public bool _errorInitializing { get; set; }
+
 
         ObservableCollection<Presenter> _Presenters;
         public ObservableCollection<Presenter> Presenters
@@ -200,11 +213,15 @@ namespace PGHTechFest.ViewModels
         private void CheckInitializationComplete()
         {
             //TODO: Clean up state.  Add Updating property that binds to progressbar 
-            if ((!IsInitialized && _isSessionReady && _isPresentationReady && _isPresenterReady) || _errorInitializing)
+            if (_isSessionReady && _isPresentationReady && _isPresenterReady)
             {
-                IsInitialized = true;
-                if (InitializationComplete != null)
-                    InitializationComplete.Invoke(this, null);
+                if (!IsInitialized)
+                {
+                    IsInitialized = true;
+                    if (InitializationComplete != null)
+                        InitializationComplete.Invoke(this, null);
+                }
+                IsUpdating = false;
             }
             else
             {
@@ -232,6 +249,8 @@ namespace PGHTechFest.ViewModels
             {
                 //TODO: lock this
                 _errorInitializing = true;
+                IsUpdating = false;
+
 
                 if (InitializationError != null)
                     InitializationError.Invoke(this, null);
@@ -245,12 +264,12 @@ namespace PGHTechFest.ViewModels
         public virtual void Initialize()
         {
             _errorInitializing = false;
+            IsUpdating = true;
             _feedService.QueryPresenters();
             _feedService.QuerySessions();
             _feedService.QueryPresentations();
         }
 
 
-        public bool _errorInitializing { get; set; }
     }
 }
