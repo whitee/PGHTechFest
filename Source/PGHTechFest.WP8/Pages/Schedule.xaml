@@ -1,0 +1,86 @@
+﻿<pages:BasePage
+    x:Class="PGHTechFest.Pages.Schedule"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
+    xmlns:pages="clr-namespace:PGHTechFest.Pages"
+    xmlns:converter="clr-namespace:PGHTechFest.Converters"
+    d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.Resources>
+        <converter:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+    </phone:PhoneApplicationPage.Resources>
+    
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,0,0,28">
+            <TextBlock Text="Pittsburgh TechFest" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="Schedule" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <phone:LongListSelector x:Name="ScheduleList"
+                                    ItemsSource="{Binding PresentationGroups}"
+                                    JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"
+                                    IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False" Foreground="{StaticResource ItemForeground}" 
+                                    GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}" SelectionChanged="LongListSelector_SelectionChanged">
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,12" BorderBrush="White" Background="{StaticResource ItemBackground}" BorderThickness="2">
+                            <Grid Margin="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding track}" />
+                                <TextBlock Text="{Binding room}" Grid.Column="1"/>
+                                <TextBlock Text="{Binding presenters_name}" Grid.Row="1" Grid.ColumnSpan="2" FontSize="24" Margin="0,0,0,12"/>
+                                <TextBlock Text="{Binding title}" Grid.Row="2" TextWrapping="Wrap" Grid.ColumnSpan="2" FontStyle="Italic" Margin="0,0,0,12"/>
+                                <TextBlock Text="{Binding description}" Grid.Row="3" MaxHeight="220" Grid.ColumnSpan="2" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
+                                <TextBlock Text="{Binding notes}" Grid.Row="4"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </phone:LongListSelector.ItemTemplate>
+                <!--<phone:LongListSelector.ListHeaderTemplate>
+                    <DataTemplate>
+                        <Border Background="White" Opacity="1" Height="70">
+                            <TextBlock Text="Schedule" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" />
+                        </Border>
+                    </DataTemplate>
+                </phone:LongListSelector.ListHeaderTemplate>-->
+            </phone:LongListSelector>
+            <ProgressBar IsIndeterminate="{Binding IsUpdating}" />
+        </Grid>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/speakers-icon.png" Text="Speakers" Click="Speakers_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/sessions-icon.png" Text="Sessions"  Click="Sessions_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/feature.settings.png" Text="About"  Click="About_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</pages:BasePage>

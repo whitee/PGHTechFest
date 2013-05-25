@@ -42,13 +42,16 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DesignHelper.cs" />
     <Compile Include="Models\PresentersFeed.cs" />
+    <Compile Include="Models\Presentation.cs" />
+    <Compile Include="Models\PresentationFeed.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\Presenter.cs" />
     <Compile Include="Models\SessionsFeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\APIProvider.cs" />
-    <Compile Include="Providers\PackageAPIProvider.cs" />
+    <Compile Include="Providers\MockAPIProvider.cs" />
     <Compile Include="Providers\WebAPIProvider.cs" />
     <Compile Include="Services\APIQueryArgs.cs" />
     <Compile Include="Services\APIService.cs" />

@@ -1,4 +1,4 @@
-﻿using PGHTechFest.DataModel;
+﻿using PGHTechFest.ViewModels;
 using PGHTechFest.Pages;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace PGHTechFest.Common
         /// Identifies the <see cref="DefaultViewModel"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty DefaultViewModelProperty =
-            DependencyProperty.Register("DefaultViewModel", typeof(FeedDataSource),
+            DependencyProperty.Register("DefaultViewModel", typeof(MainViewModel),
             typeof(LayoutAwarePage), null);
 
         private List<Control> _layoutAwareControls;
@@ -55,10 +55,9 @@ namespace PGHTechFest.Common
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
 
             // Create an empty default view model
-            this.DefaultViewModel = Application.Current.Resources["DataSource"] as FeedDataSource;
+            this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
 
-            if (!DefaultViewModel.IsInitialized)
-                DefaultViewModel.Initialize();
+
 
             // When this page is part of the visual tree make two changes:
             // 1) Map application view state to visual state for the page
@@ -77,6 +76,12 @@ namespace PGHTechFest.Common
                     Window.Current.CoreWindow.PointerPressed +=
                         this.CoreWindow_PointerPressed;
                 }
+
+                this.DefaultViewModel.InitializationError += DefaultViewModel_InitializationError;
+
+                if (!DefaultViewModel.IsInitialized)
+                    DefaultViewModel.Initialize();
+
             };
 
             // Undo the same changes when the page is no longer visible
@@ -87,18 +92,31 @@ namespace PGHTechFest.Common
                     CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
                     this.CoreWindow_PointerPressed;
+
+                this.DefaultViewModel.InitializationError -= DefaultViewModel_InitializationError;
+
             };
+        }
+
+        async private void DefaultViewModel_InitializationError(object sender, EventArgs e)
+        {
+            Windows.UI.Popups.MessageDialog messageDialog = new Windows.UI.Popups.MessageDialog("There was a problem getting the conference data.", "Whoops");
+            messageDialog.DefaultCommandIndex = 0;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await messageDialog.ShowAsync();
+            });
         }
 
         /// <summary>
         /// An implementation of <see cref="IObservableMap&lt;String, Object&gt;"/> designed to be
         /// used as a trivial view model.
         /// </summary>
-        protected FeedDataSource DefaultViewModel
+        protected MainViewModel DefaultViewModel
         {
             get
             {
-                return this.GetValue(DefaultViewModelProperty) as FeedDataSource;
+                return this.GetValue(DefaultViewModelProperty) as MainViewModel;
             }
 
             set
@@ -114,9 +132,19 @@ namespace PGHTechFest.Common
             Frame.Navigate(typeof(Sessions));
         }
 
+        protected void SchedulePage_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Schedule));
+        }
+
         protected void SpeakersPage_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Speakers));
+        }
+
+        protected void AboutPage_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
         }
 
         /// <summary>

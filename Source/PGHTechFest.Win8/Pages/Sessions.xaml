@@ -7,9 +7,9 @@
     xmlns:common="using:PGHTechFest.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:PGHTechFest.DataModel"
+    xmlns:vm="using:PGHTechFest.ViewModels"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    d:DataContext="{Binding Source={d:DesignInstance Type=data:DesignDataSource, IsDesignTimeCreatable=True}}"
+    d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
     xmlns:converter="using:PGHTechFest.Converters" 
     mc:Ignorable="d">
 
@@ -32,7 +32,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
+
+        <Image Source="ms-appx:///Images/Branding.png" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="None"/>
 
         <!-- Back button and page title -->
         <Grid>
@@ -48,9 +51,10 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" x:Name="SessionPanel" >
-            
-            <SemanticZoom Margin="120,0,0,0" Grid.Row="1"  x:Name="SessionZoom">
+        <Grid Grid.Row="1" x:Name="ContentPanel" >
+            <ProgressBar IsIndeterminate="{Binding IsUpdating}" VerticalAlignment="Bottom"/>
+
+            <SemanticZoom Grid.Row="1"  x:Name="SessionZoom">
                 <SemanticZoom.ZoomedOutView>
                     <GridView>
                         <GridView.ItemTemplate>
@@ -58,30 +62,43 @@
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" /> 
-                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
-                                    </StackPanel>
-                                    <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource SessionGrouptoSessionTopicsConverter}}" />
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Grid Grid.Column="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding Group.Key}" Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" TextTrimming="WordEllipsis"  TextWrapping="Wrap" HorizontalAlignment="Right"/>
+                                        <TextBlock Grid.Column="1" Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap" Text="{Binding Group, Converter={StaticResource SessionGrouptoSessionTopicsConverter}}" VerticalAlignment="Bottom" />
                                 </Grid>
                             </DataTemplate>
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapGrid Orientation="Horizontal" VerticalChildrenAlignment="Center" Margin="0,0,0,0"/>
+                                <WrapGrid Orientation="Vertical"  Margin="120,0,0,0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="Margin" Value="4" />
                                 <Setter Property="Padding" Value="10" />
-                                <Setter Property="Background" Value="DarkGreen" />
+                                <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                                <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                                 <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="Width" Value="400" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                                <Setter Property="Width" Value="420" />
+                                <Setter Property="Height" Value="140" />
                             </Style>
                         </GridView.ItemContainerStyle>
                     </GridView>
@@ -104,17 +121,18 @@
                         </GridView.ItemTemplate>
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Vertical"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" Margin="120,0,0,0" />
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
                             <Style TargetType="GridViewItem">
                                 <Setter Property="Margin" Value="4" />
                                 <Setter Property="Padding" Value="10" />
-                                <Setter Property="Background" Value="DarkGreen" />
+                                <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                                <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                                 <Setter Property="BorderThickness" Value="1" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                 <Setter Property="Width" Value="400" />
                             </Style>
                         </GridView.ItemContainerStyle>
@@ -144,6 +162,10 @@
                     </GridView>
                 </SemanticZoom.ZoomedInView>
             </SemanticZoom>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="ContentPanelSnapped" Visibility="Collapsed" >
+            <TextBlock Text="Snap View is not yet available" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Center" />
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -177,24 +199,28 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitlePanel" Storyboard.TargetProperty="Orientation">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Vertical"/>
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SessionPanel" Storyboard.TargetProperty="Width">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="250" />
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPanel" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPanelSnapped" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-    <Page.BottomAppBar>
-        <AppBar IsOpen="True" >
+    <Page.BottomAppBar >
+        <AppBar IsOpen="True" IsSticky="True" >
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
-                <Button Grid.Column="1" Style="{StaticResource SessionsAppBarButtonStyle}" Click="SessionsPage_Click" />
-                
+                <Button Grid.Column="1" Style="{StaticResource ScheduleAppBarButtonStyle}" Click="SchedulePage_Click" />
+                <Button Grid.Column="2" Style="{StaticResource AboutAppBarButtonStyle}" Click="AboutPage_Click" />
             </Grid>
         </AppBar>
     </Page.BottomAppBar>

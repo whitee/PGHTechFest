@@ -12,7 +12,10 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>PGHTechFest.Win8_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>PGHTechFest.Win8_StoreKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\Evan\Documents\GitHub\AppPackages\PGHTechFest.Win8\</AppxPackageDir>
+    <PackageCertificateThumbprint>D823D33B301A306DFCB6412A1F77690EC4B80CF9</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -107,19 +110,39 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PGHTechFest.Shared\Common\AsyncLock.cs">
+      <Link>Common\AsyncLock.cs</Link>
+    </Compile>
+    <Compile Include="..\PGHTechFest.Shared\Common\BindableBase.cs">
+      <Link>Common\BindableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\PGHTechFest.Shared\ViewModels\DesignViewModel.cs">
+      <Link>ViewModel\DesignViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\PGHTechFest.Shared\ViewModels\GroupInfoList.cs">
+      <Link>ViewModel\GroupInfoList.cs</Link>
+    </Compile>
+    <Compile Include="..\PGHTechFest.Shared\ViewModels\MainViewModel.cs">
+      <Link>ViewModel\MainViewModel.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanNegationConverter.cs" />
+    <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
+    <Compile Include="Converters\PresentationGrouptoPresentationTopicsConverter.cs" />
     <Compile Include="Converters\SessionGrouptoSessionTopicsConverter.cs" />
     <Compile Include="Converters\UserToLinkConverter.cs" />
-    <Compile Include="DataModel\DesignDataSource.cs" />
-    <Compile Include="DataModel\FeedDataSource.cs" />
-    <Compile Include="DataModel\GroupInfoList.cs" />
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Schedule.xaml.cs">
+      <DependentUpon>Schedule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Sessions.xaml.cs">
       <DependentUpon>Sessions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\LayoutAwarePage.cs" />
@@ -135,23 +158,52 @@
     </AppxManifest>
     <None Include="Common\ReadMe.txt" />
     <None Include="packages.config" />
+    <None Include="PGHTechFest.Win8_StoreKey.pfx" />
     <None Include="PGHTechFest.Win8_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo.png" />
-    <Content Include="Assets\SmallLogo.png" />
-    <Content Include="Assets\SplashScreen.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\LightGray.png" />
-    <Content Include="Assets\MediumGray.png" />
-    <Content Include="Assets\DarkGray.png" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-140.png" />
+    <Content Include="Assets\BadgeLogo.scale-180.png" />
+    <Content Include="Assets\Logo.scale-100.png" />
+    <Content Include="Assets\Logo.scale-140.png" />
+    <Content Include="Assets\Logo.scale-180.png" />
+    <Content Include="Assets\Logo.scale-80.png" />
+    <Content Include="Assets\SmallLogo.scale-100.png" />
+    <Content Include="Assets\SmallLogo.scale-140.png" />
+    <Content Include="Assets\SmallLogo.scale-180.png" />
+    <Content Include="Assets\SmallLogo.scale-80.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-140.png" />
+    <Content Include="Assets\SplashScreen.scale-180.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-140.png" />
+    <Content Include="Assets\StoreLogo.scale-180.png" />
+    <Content Include="Assets\WideLogo.scale-100.png" />
+    <Content Include="Assets\WideLogo.scale-140.png" />
+    <Content Include="Assets\WideLogo.scale-180.png" />
+    <Content Include="Assets\WideLogo.scale-80.png" />
+    <Content Include="Images\Branding.png" />
+    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Common\YellowThemeStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Common\StandardStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Schedule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

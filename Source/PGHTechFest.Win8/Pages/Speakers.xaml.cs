@@ -24,6 +24,23 @@ namespace PGHTechFest.Pages
         public Speakers()
         {
             this.InitializeComponent();
+            if (DefaultViewModel.IsInitialized)
+            {
+                SetZoomedOutViewItemsSource();
+            }
+            else
+            {
+                DefaultViewModel.InitializationComplete += delegate(object s, EventArgs e)
+                {
+                    SetZoomedOutViewItemsSource();
+                };
+            }
+        }
+
+        private void SetZoomedOutViewItemsSource()
+        {
+            if (DefaultViewModel.PresenterGroups != null)
+                (SessionZoom.ZoomedOutView as ListViewBase).ItemsSource = DefaultViewModel.PresenterGroups.CollectionGroups;
         }
 
         /// <summary>
