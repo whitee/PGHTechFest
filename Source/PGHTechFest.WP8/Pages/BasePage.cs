@@ -29,19 +29,32 @@ namespace PGHTechFest.Pages
             set { this.SetValue(DefaultViewModelProperty, value); }
         }
 
-
         public BasePage()
         {
             // Create an empty default view model
             this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
+        }
 
-            this.DefaultViewModel.InitializationError += delegate(object sender, EventArgs e)
-            {
-                MessageBox.Show("There was a problem getting the conference data.");
-            };
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+ 	         base.OnNavigatedTo(e);
 
-            if (!DefaultViewModel.IsInitialized)
-                DefaultViewModel.Initialize();
+             if (!DefaultViewModel.IsInitialized)
+                 DefaultViewModel.Initialize();
+
+            this.DefaultViewModel.InitializationError += DefaultViewModel_InitializationError;
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+ 	         base.OnNavigatedFrom(e);
+
+            this.DefaultViewModel.InitializationError -= DefaultViewModel_InitializationError;
+        }
+
+        private void DefaultViewModel_InitializationError(object sender, EventArgs e)
+        {
+            MessageBox.Show("There was a problem getting the conference data.", "Whoops", MessageBoxButton.OK);
         }
 
         public void Sessions_Click(object sender, EventArgs e)

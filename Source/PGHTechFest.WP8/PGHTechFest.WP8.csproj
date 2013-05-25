@@ -90,6 +90,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\PGHTechFest.Shared\Common\AsyncLock.cs">
+      <Link>Common\AsyncLock.cs</Link>
+    </Compile>
     <Compile Include="..\PGHTechFest.Shared\Common\BindableBase.cs">
       <Link>Common\BindableBase.cs</Link>
     </Compile>

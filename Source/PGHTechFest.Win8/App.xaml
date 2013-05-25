@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Application-specific resources -->
-            <converter:BooleanNegationConverter x:Key="BooleanNegationConverter" />
+            <!--<converter:BooleanNegationConverter x:Key="BooleanNegationConverter" />-->
 
             <x:String x:Key="AppName">Pittsburgh TechFest</x:String>
             <vm:MainViewModel x:Name="DataSource" />

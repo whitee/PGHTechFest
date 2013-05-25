@@ -19,7 +19,7 @@ namespace PGHTechFest.API.Models
         public List<Presentation> Session4 { get; set; }
         [DataMember(Name="2:00 - 3:00")]
         public List<Presentation> Session5 { get; set; }
-        [DataMember(Name="2:00 - 4:30")]
+        [DataMember(Name="1:15 - 4:30")]
         public List<Presentation> Session6 { get; set; }
         [DataMember(Name = "3:30 - 4:30")]
         public List<Presentation> Session7 { get; set; }

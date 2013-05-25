@@ -57,15 +57,6 @@ namespace PGHTechFest.Common
             // Create an empty default view model
             this.DefaultViewModel = Application.Current.Resources["DataSource"] as MainViewModel;
 
-            this.DefaultViewModel.InitializationError += async delegate(object sender, EventArgs e)
-            {
-                Windows.UI.Popups.MessageDialog messageDialog = new Windows.UI.Popups.MessageDialog("There was a problem getting the conference data.", "Whoops");
-                messageDialog.DefaultCommandIndex = 0;
-                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-                {
-                    await messageDialog.ShowAsync();
-                });
-            };
 
 
             // When this page is part of the visual tree make two changes:
@@ -73,9 +64,6 @@ namespace PGHTechFest.Common
             // 2) Handle keyboard and mouse navigation requests
             this.Loaded += (sender, e) =>
             {
-                if (!DefaultViewModel.IsInitialized)
-                    DefaultViewModel.Initialize();
-
                 this.StartLayoutUpdates(sender, e);
 
                 // Keyboard and mouse navigation only apply when occupying the entire window
@@ -88,6 +76,12 @@ namespace PGHTechFest.Common
                     Window.Current.CoreWindow.PointerPressed +=
                         this.CoreWindow_PointerPressed;
                 }
+
+                this.DefaultViewModel.InitializationError += DefaultViewModel_InitializationError;
+
+                if (!DefaultViewModel.IsInitialized)
+                    DefaultViewModel.Initialize();
+
             };
 
             // Undo the same changes when the page is no longer visible
@@ -98,7 +92,20 @@ namespace PGHTechFest.Common
                     CoreDispatcher_AcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
                     this.CoreWindow_PointerPressed;
+
+                this.DefaultViewModel.InitializationError -= DefaultViewModel_InitializationError;
+
             };
+        }
+
+        async private void DefaultViewModel_InitializationError(object sender, EventArgs e)
+        {
+            Windows.UI.Popups.MessageDialog messageDialog = new Windows.UI.Popups.MessageDialog("There was a problem getting the conference data.", "Whoops");
+            messageDialog.DefaultCommandIndex = 0;
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                await messageDialog.ShowAsync();
+            });
         }
 
         /// <summary>
@@ -133,6 +140,11 @@ namespace PGHTechFest.Common
         protected void SpeakersPage_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Speakers));
+        }
+
+        protected void AboutPage_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(About));
         }
 
         /// <summary>

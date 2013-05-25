@@ -97,6 +97,7 @@
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
+            <ProgressBar IsIndeterminate="{Binding IsUpdating}" />
         </Grid>
     </Grid>
 

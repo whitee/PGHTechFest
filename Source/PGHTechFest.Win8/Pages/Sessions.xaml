@@ -216,10 +216,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
                 <Button Style="{StaticResource SpeakersAppBarButtonStyle}"  Click="SpeakersPage_Click"  />
                 <Button Grid.Column="1" Style="{StaticResource ScheduleAppBarButtonStyle}" Click="SchedulePage_Click" />
-                
+                <Button Grid.Column="2" Style="{StaticResource AboutAppBarButtonStyle}" Click="AboutPage_Click" />
             </Grid>
         </AppBar>
     </Page.BottomAppBar>

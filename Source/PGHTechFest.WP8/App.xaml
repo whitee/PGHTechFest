@@ -10,6 +10,10 @@
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:PGHTechFest" x:Key="LocalizedStrings"/>
         <vm:MainViewModel x:Name="DataSource" />
+        
+        <Style TargetType="ProgressBar">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
 
         <SolidColorBrush x:Key="ItemHeaderBackground" Color="#FFFFFAC6"/>
         <SolidColorBrush x:Key="ItemBackground" Color="#FFF6D23A"/>

@@ -532,13 +532,13 @@
         <Setter Property="AutomationProperties.AutomationId" Value="PhotoAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Photo"/>
         <Setter Property="Content" Value="&#xE114;"/>
-    </Style>
-    <Style x:Key="SettingsAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="SettingsAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Settings"/>
+    </Style>-->
+    <Style x:Key="AboutAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="AboutAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="About"/>
         <Setter Property="Content" Value="&#xE115;"/>
     </Style>
-    -->
+    
 
     <!--
     <Style x:Key="VideoAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">

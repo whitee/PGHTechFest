@@ -243,17 +243,21 @@ namespace PGHTechFest.ViewModels
 
         }
 
-        private void Failure_Handler(object sender, APIQueryArgs e)
+        async private void Failure_Handler(object sender, APIQueryArgs e)
         {
-            if (!_errorInitializing)
+            AsyncLock mutex = new AsyncLock();
+
+            using (await mutex.LockAsync())
             {
-                //TODO: lock this
-                _errorInitializing = true;
-                IsUpdating = false;
+                if (!_errorInitializing)
+                {
+                    _errorInitializing = true;
+                    IsUpdating = false;
 
 
-                if (InitializationError != null)
-                    InitializationError.Invoke(this, null);
+                    if (InitializationError != null)
+                        InitializationError.Invoke(this, null);
+                }
             }
 
             //TODO: Display something useful.  Cached data for example.
