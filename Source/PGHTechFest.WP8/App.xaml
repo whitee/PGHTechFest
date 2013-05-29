@@ -4,45 +4,93 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:vm="clr-namespace:PGHTechFest.ViewModels">
+    xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
+    xmlns:converter="clr-namespace:PGHTechFest.Converters" >
 
     <!--Application Resources-->
     <Application.Resources>
-        <local:LocalizedStrings xmlns:local="clr-namespace:PGHTechFest" x:Key="LocalizedStrings"/>
-        <vm:MainViewModel x:Name="DataSource" />
-        
-        <Style TargetType="ProgressBar">
-            <Setter Property="Background" Value="Transparent" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 
+                    Styles that define common aspects of the platform look and feel
+                    Required by Visual Studio project and item templates
+                 -->
+                <ResourceDictionary Source="Themes/ItemTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
+            <converter:EmptyStringToVisibilityConverter x:Name="EmptyStringToVisibilityConverter" />
 
-        <SolidColorBrush x:Key="ItemHeaderBackground" Color="#FFFFFAC6"/>
-        <SolidColorBrush x:Key="ItemBackground" Color="#FFF6D23A"/>
-        <SolidColorBrush x:Key="ItemForeground" Color="#FF000000"/>
+            <DataTemplate x:Key="SpeakerItemTemplate">
+                <Border Margin="0,0,0,12" Padding="4,8" BorderBrush="Transparent" Background="{StaticResource ItemBackground}" BorderThickness="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-        <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
-            <Setter Property="LayoutMode" Value="List" />
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Border Background="{StaticResource ItemHeaderBackground}" Margin="6" >
-                            <TextBlock Text="{Binding Key}"
+                        <TextBlock Text="{Binding name}" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,12,12" FontWeight="Thin" />
+
+                        <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"  TextTrimming="WordEllipsis"/>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,6,12,4"/>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <HyperlinkButton Content="{Binding twitter}" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}" TargetName="_blank" Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
+                                <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" TargetName="_blank" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
+                                <HyperlinkButton Grid.Row="3" Content="Github" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" TargetName="_blank" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+
+            <local:LocalizedStrings xmlns:local="clr-namespace:PGHTechFest" x:Key="LocalizedStrings"/>
+            
+            <vm:MainViewModel x:Name="DataSource" />
+
+            <Style TargetType="ProgressBar">
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
+                <Setter Property="LayoutMode" Value="List" />
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Background="{StaticResource ItemHeaderBackground}" Margin="6" >
+                                <TextBlock Text="{Binding Key}"
                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                FontSize="32" Padding="6"
                                                Foreground="Black"
                                                VerticalAlignment="Center" TextWrapping="Wrap"/>
-                        </Border>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <DataTemplate x:Key="JumpListGroupHeaderTemplate">
-            <Border Background="{StaticResource ItemHeaderBackground}" Margin="0,6,0,12">
-                <TextBlock Text="{Binding Key}"
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
+            <DataTemplate x:Key="JumpListGroupHeaderTemplate">
+                <Border Background="{StaticResource ItemHeaderBackground}" Margin="0,6,0,12">
+                    <TextBlock Text="{Binding Key}"
         			FontSize="26" Padding="6"
         			VerticalAlignment="Center" HorizontalAlignment="Center" 
         			TextWrapping="Wrap" FontStretch="Condensed" />
-            </Border>
-        </DataTemplate>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

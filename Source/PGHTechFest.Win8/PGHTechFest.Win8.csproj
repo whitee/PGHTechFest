@@ -128,6 +128,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\RichTextBlockProperties.cs" />
     <Compile Include="Converters\BooleanNegationConverter.cs" />
     <Compile Include="Converters\EmptyStringToVisibilityConverter.cs" />
     <Compile Include="Converters\PresentationGrouptoPresentationTopicsConverter.cs" />
@@ -183,7 +184,9 @@
     <Content Include="Assets\WideLogo.scale-140.png" />
     <Content Include="Assets\WideLogo.scale-180.png" />
     <Content Include="Assets\WideLogo.scale-80.png" />
+    <EmbeddedResource Include="Common\RichTextBlockHtml2Xaml.xslt" />
     <Content Include="Images\Branding.png" />
+    <Content Include="Images\Recollection.png" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +194,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="..\PGHTechFest.Shared\Themes\ItemTemplates.xaml">
+      <Link>Themes\ItemTemplates.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Common\YellowThemeStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

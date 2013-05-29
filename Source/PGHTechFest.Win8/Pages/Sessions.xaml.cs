@@ -21,9 +21,13 @@ namespace PGHTechFest.Pages
     /// </summary>
     public sealed partial class Sessions : PGHTechFest.Common.LayoutAwarePage
     {
+        Windows.UI.ApplicationSettings.SettingsPane _settingsPane;
+
         public Sessions()
         {
             this.InitializeComponent();
+
+            _settingsPane = Windows.UI.ApplicationSettings.SettingsPane.GetForCurrentView();
 
             if (DefaultViewModel.IsInitialized)
             {
@@ -37,6 +41,30 @@ namespace PGHTechFest.Pages
                 };
             }
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            _settingsPane.CommandsRequested += App_CommandsRequested;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            _settingsPane.CommandsRequested -= App_CommandsRequested;
+            base.OnNavigatedFrom(e);
+        }
+
+        private void App_CommandsRequested(Windows.UI.ApplicationSettings.SettingsPane sender, Windows.UI.ApplicationSettings.SettingsPaneCommandsRequestedEventArgs args)
+        {
+            if (args.Request.ApplicationCommands.Count < 1)
+            {
+                args.Request.ApplicationCommands.Add(new Windows.UI.ApplicationSettings.SettingsCommand("privacy", "Privacy Policy", x =>
+                {
+                    Frame.Navigate(typeof(About));
+                }));
+            }
+        }
+
 
         private void SetZoomedOutViewItemsSource()
         {

@@ -13,13 +13,12 @@
     xmlns:vm="clr-namespace:PGHTechFest.ViewModels"
     d:DataContext="{Binding Source={d:DesignInstance Type=vm:DesignViewModel, IsDesignTimeCreatable=True}}"
     DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
-    xmlns:converter="clr-namespace:PGHTechFest.Converters" 
+    
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
     <pages:BasePage.Resources>
-        <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
-        <converter:EmptyStringToVisibilityConverter x:Name="EmptyStringToVisibilityConverter" />
+
         <Style x:Key="LongListSelectorJumpListStyle" TargetType="phone:LongListSelector">
             <Setter Property="GridCellSize"  Value="113,113"/>
             <Setter Property="LayoutMode" Value="Grid" />
@@ -58,44 +57,8 @@
                                     JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"
                                     GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}"
                                     Foreground="{StaticResource ItemForeground}"
-                                    IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False">
-                <phone:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,0,0,12" BorderBrush="White" Background="{StaticResource ItemBackground}" BorderThickness="2">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Text="{Binding name}" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,12,12" FontWeight="Thin" />
-
-                                <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"  TextTrimming="WordEllipsis"/>
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,6,12,4"/>
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <HyperlinkButton Content="{Binding twitter}" NavigateUri="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter}" TargetName="_blank" Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
-                                        <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
-                                        <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" NavigateUri="{Binding Path=blog_url, Converter={StaticResource UserToLinkConverter}, ConverterParameter=blog}" TargetName="_blank" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
-                                        <HyperlinkButton Grid.Row="3" Content="Github" Margin="-16,0,0,0" NavigateUri="{Binding github_id, Converter={StaticResource UserToLinkConverter}, ConverterParameter=github}" TargetName="_blank" />
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
+                                    IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False"
+                                    ItemTemplate="{StaticResource SpeakerItemTemplate}">
             </phone:LongListSelector>
             <ProgressBar IsIndeterminate="{Binding IsUpdating}" />
         </Grid>
