@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{68a2f01b-45d9-40ea-9962-afaa92f1b11a}" Title="PGHTechFest" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="PGHTechFest.WP8 author" Description="Sample description" Publisher="PGHTechFest.WP8" PublisherID="{1bf0b1c6-295e-430e-b58d-570105c47e0e}">
+  <App xmlns="" ProductID="{68a2f01b-45d9-40ea-9962-afaa92f1b11a}" Title="PGHTechFest" RuntimeType="Silverlight" Version="1.0.1.0" Genre="apps.normal" Author="PGHTechFest.WP8 author" Description="Sample description" Publisher="PGHTechFest.WP8" PublisherID="{1bf0b1c6-295e-430e-b58d-570105c47e0e}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

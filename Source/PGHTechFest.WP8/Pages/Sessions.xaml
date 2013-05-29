@@ -38,33 +38,9 @@
                                     JumpListStyle="{StaticResource LongListSelectorJumpListStyle}"
                                     IsGroupingEnabled="True" LayoutMode="List" HideEmptyGroups="False"
                                     Foreground="{StaticResource ItemForeground}"
-                                    GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}">
-                <phone:LongListSelector.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,0,0,12" BorderBrush="White" Background="{StaticResource ItemBackground}" BorderThickness="2">
-                            <Grid Margin="4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding track}" />
-                                <TextBlock Text="{Binding room}" Grid.Column="1"/>
-                                <TextBlock Text="{Binding presenter}"  Grid.Row="1" Grid.ColumnSpan="2" FontSize="24" Margin="0,0,0,12"/>
-                                <TextBlock Text="{Binding title}" Grid.Row="2" TextWrapping="Wrap" Grid.ColumnSpan="2" FontStyle="Italic" Margin="0,0,0,12"/>
-                                <TextBlock Text="{Binding description}" Grid.Row="3" MaxHeight="220" Grid.ColumnSpan="2" TextWrapping="Wrap" TextTrimming="WordEllipsis"/>
-                                <TextBlock Text="{Binding notes}"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </phone:LongListSelector.ItemTemplate>
-            </phone:LongListSelector>
-            
+                                    GroupHeaderTemplate="{StaticResource JumpListGroupHeaderTemplate}" 
+                                    ItemTemplate="{StaticResource SessionItemTemplate}"/>
+
             <ProgressBar IsIndeterminate="{Binding IsUpdating}" />
         </Grid>
     </Grid>

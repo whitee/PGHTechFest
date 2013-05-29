@@ -14,7 +14,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converter:UserToLinkConverter x:Name="UserToLinkConverter" />
         <converter:EmptyStringToVisibilityConverter x:Name="EmptyStringToVisibilityConverter" />
         <CollectionViewSource x:Key="PresenterGroups"
                           IsSourceGrouped="True"
@@ -90,45 +89,11 @@
                 </SemanticZoom.ZoomedOutView>
 
                 <SemanticZoom.ZoomedInView>
-                    <GridView ItemsSource="{Binding PresenterGroups}" SelectionMode="None" IsSwipeEnabled="True" >
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Text="{Binding name}" FontFamily="Segoe UI Light" FontSize="24" Margin="0,0,12,12" FontWeight="Thin" />
-
-                                    <TextBlock Grid.Row="1" Text="{Binding bio}" TextWrapping="Wrap"  TextTrimming="WordEllipsis"/>
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Image Source="{Binding twitter, Converter={StaticResource UserToLinkConverter}, ConverterParameter=twitter_image}" Stretch="None" Margin="0,6,12,4"/>
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-
-                                            <HyperlinkButton Content="{Binding twitter}" Padding="16,-3,16,-3" Visibility="{Binding twitter, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
-                                            <TextBlock Grid.Row="1" Text="{Binding email}" Visibility="{Binding email, Converter={StaticResource EmptyStringToVisibilityConverter}}"/>
-                                            <HyperlinkButton Grid.Row="2" Content="{Binding blog_url}" Padding="16,-3,16,-3" Visibility="{Binding blog_url, Converter={StaticResource EmptyStringToVisibilityConverter}}" Margin="-16,0,0,-2"/>
-                                            <HyperlinkButton Grid.Row="3" Content="Github" Padding="16,-3,16,-3" Margin="-16,0,0,0" Visibility="{Binding github_id, Converter={StaticResource EmptyStringToVisibilityConverter}}" />
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
+                    <GridView ItemsSource="{Binding PresenterGroups}" SelectionMode="None" IsSwipeEnabled="True" 
+                              ItemTemplate="{StaticResource SpeakerItemTemplate}">
                         <GridView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <VariableSizedWrapGrid Orientation="Vertical" Margin="120,0,0,0"/>
+                                <VirtualizingStackPanel Orientation="Horizontal" Margin="120,0,0,0"/>
                             </ItemsPanelTemplate>
                         </GridView.ItemsPanel>
                         <GridView.ItemContainerStyle>
@@ -139,9 +104,8 @@
                                 <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
                                 <Setter Property="Width" Value="400" />
-                                <Setter Property="Height" Value="200" />
                             </Style>
                         </GridView.ItemContainerStyle>
                         <GridView.GroupStyle>
@@ -173,8 +137,50 @@
 
         </Grid>
 
-        <Grid Grid.Row="1" x:Name="ContentPanelSnapped" Visibility="Collapsed" >
-            <TextBlock Text="Snap View is not yet available" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Center" />
+        <Grid Grid.Row="1" Grid.RowSpan="2" x:Name="ContentPanelSnapped" Visibility="Collapsed" >
+            <GridView ItemsSource="{Binding PresenterGroups}" SelectionMode="None" IsSwipeEnabled="True" 
+                              ItemTemplate="{StaticResource SpeakerItemTemplate}">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical" Margin="12,0,0,24"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="4" />
+                        <Setter Property="Padding" Value="10" />
+                        <Setter Property="Background" Value="{StaticResource ItemBackground}" />
+                        <Setter Property="Foreground" Value="{StaticResource ItemForeground}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Top" />
+                        <Setter Property="Width" Value="300" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Margin="1,0,0,6">
+                                    <Button
+                                    AutomationProperties.Name="Group Title"
+                                    Style="{StaticResource TextPrimaryButtonStyle}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}"  Margin="3,-7,10,10" Style="{StaticResource GroupHeaderTextStyle}" />
+                                            <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <VariableSizedWrapGrid Orientation="Vertical" Margin="0,0,0,24"/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                    </GroupStyle>
+                </GridView.GroupStyle>
+            </GridView>
         </Grid>
 
 

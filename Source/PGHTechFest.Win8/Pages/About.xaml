@@ -38,7 +38,7 @@
             </StackPanel>
         </Grid>
 
-        <Image Source="ms-appx:///Images/Branding.png" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="None"/>
+        <Image x:Name="BrandingImage" Source="ms-appx:///Images/Branding.png" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Stretch="None" Margin="0,0,0,200"/>
 
         <Grid x:Name="ContentPanel" Grid.Row="1">
             <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
 
             <RichTextBlock HorizontalAlignment="Center">
-                <Paragraph>
+                <Paragraph >
                     <Run Text="This app makes use of the " />
                     <InlineUIContainer>
                         <HyperlinkButton Margin="-12,0,-12,-14" Content="Official Pittsburg Techfest API" NavigateUri="http://pghtechfest.com/api" />
@@ -78,9 +78,9 @@
                 </Paragraph>
             </RichTextBlock>
 
-            <TextBlock Grid.Row="1" Text="version 1.0.0" Margin="0,24,0,24" HorizontalAlignment="Center" />
+            <TextBlock Grid.Row="1" Text="version 1.0.0" Margin="0,24,0,24" HorizontalAlignment="Center"  Style="{StaticResource BasicTextStyle}"/>
 
-            <!--<Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="0,12,0,12">
+            <Grid Grid.Row="2" VerticalAlignment="Bottom" Background="#FF5E78A6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition />
@@ -89,12 +89,13 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Image Source="/Images/Recollection.png" Margin="0,0,12,0" Grid.RowSpan="2" Width="100"/>
-                <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Remember long numbers using the Major System." />
-                <HyperlinkButton Grid.Column="1" Grid.Row="1" Margin="-24,0,-12,-6" Content="Recollection for Windows Phone" NavigateUri="http://windowsphone.com/s?appId=8de271b5-437c-4a26-b2cd-987148b4955b" />
-            </Grid>-->
+                <Image Source="/Images/Recollection.png" Margin="0,0,12,0" Grid.RowSpan="2" Width="200"/>
+                <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Remember long numbers using the Major System." Margin="0,12,0,0" Style="{StaticResource GroupHeaderTextStyle}" />
+                <HyperlinkButton Grid.Column="1" Grid.Row="1" Margin="-24,0,-12,-6" Content="Recollection for Windows Phone" NavigateUri="http://apps.microsoft.com/windows/app/recollection/699fe4c9-13a8-4ff7-b2df-d6cae8802f83" />
+            </Grid>
         </Grid>
-        <Grid x:Name="ContentPanelSnapped" Grid.Row="1" Visibility="Collapsed">
+        
+        <Grid x:Name="ContentPanelSnapped" Grid.Row="1" Margin="12,0" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -134,6 +135,19 @@
 
             <TextBlock Grid.Row="1" Text="version 1.0.0" Margin="0,24,0,24" HorizontalAlignment="Center" />
 
+            <Grid Grid.Row="2" VerticalAlignment="Bottom" Margin="-12,0"  Background="#FF5E78A6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Image Source="/Images/Recollection.png" Margin="0,0,12,0" Grid.RowSpan="2" Width="100"/>
+                <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Remember long numbers using the Major System." Style="{StaticResource BasicTextStyle}" />
+                <HyperlinkButton Grid.Column="1" Grid.Row="1" Margin="-24,0,-12,-6" Content="Recollection for Windows" NavigateUri="http://apps.microsoft.com/windows/app/recollection/699fe4c9-13a8-4ff7-b2df-d6cae8802f83" />
+            </Grid>
         </Grid>
         <VisualStateManager.VisualStateGroups>
 
@@ -171,6 +185,13 @@
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPanelSnapped" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BrandingImage" Storyboard.TargetProperty="Margin">
+                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
